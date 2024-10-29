@@ -13,6 +13,7 @@ using namespace std;
 void setColor(int color) {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 }
+
 void displayLogo() {
     setColor(3); 
     cout << "    ***************************************************************************************************************\n";
@@ -51,7 +52,6 @@ void displayMenu() {
     setColor(15); // Reset to white
     cout << "\n                           Choose an option: ";
 }
-
 
 // Base User class
 class User {
