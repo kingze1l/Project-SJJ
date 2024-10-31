@@ -66,6 +66,8 @@ public:
     static void loadFromFile(std::ifstream& inFile, std::unordered_map<std::string, Admin>& admins);
 };
 
+
+
 extern std::unordered_map<std::string, Student> students;
 extern std::unordered_map<std::string, Admin> admins;
 

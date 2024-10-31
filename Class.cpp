@@ -19,6 +19,8 @@ string User::getEmail() const {
     return email;
 }
 
+
+
 bool Student::getIsDomestic() const {
     return isDomestic;
 }
@@ -43,8 +45,9 @@ void Student::loadFromFile(ifstream& inFile, unordered_map<string, Student>& stu
     }
 }
 
-// Derived Admin class
 
+
+// Derived Admin class
 void Admin::viewAllStudents(const unordered_map<string, Student>& students) const {
     cout << "\n-- All Students --" << endl;
     for (const auto& pair : students) {
@@ -83,6 +86,8 @@ void Admin::removeStudent(unordered_map<string, Student>& students, string stude
     }
 }
 
+
+
 // Load admin details from a file
 void Admin::loadFromFile(ifstream& inFile, unordered_map<string, Admin>& admins) {
     string email, password;
@@ -90,6 +95,8 @@ void Admin::loadFromFile(ifstream& inFile, unordered_map<string, Admin>& admins)
         admins[email] = Admin(email, password);
     }
 }
+
+
 
 // Function to hide password input
 string inputPassword() {
