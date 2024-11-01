@@ -54,6 +54,7 @@ public:
     Admin() = default;
     Admin(std::string email, std::string password) : User(email, password) {}
 
+
     void viewAllStudents(const std::unordered_map<std::string, Student>& students) const;
 
     void viewDomesticStudents(const std::unordered_map<std::string, Student>& students) const;

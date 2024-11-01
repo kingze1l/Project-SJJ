@@ -48,6 +48,7 @@ void Student::loadFromFile(ifstream& inFile, unordered_map<string, Student>& stu
 
 
 // Derived Admin class
+
 void Admin::viewAllStudents(const unordered_map<string, Student>& students) const {
     cout << "\n-- All Students --" << endl;
     for (const auto& pair : students) {
@@ -175,11 +176,6 @@ bool signIn(const string& email, const string& password) {
             cout << "Admin login successful!" << endl;
             return true;
         }
-        else {
-            setColor(12);
-            cout << "Incorrect password for admin." << endl;
-            return false;
-        }
     }
 
     if (students.find(email) != students.end()) {
@@ -187,13 +183,7 @@ bool signIn(const string& email, const string& password) {
             cout << "Student login successful!" << endl;
             return true;
         }
-        else {
-            cout << "Incorrect password for student." << endl;
-            return false;
-        }
     }
-
-    cout << "Email not found." << endl;
     return false;
 }
 
