@@ -8,6 +8,7 @@
 #include <cstdlib> 
 #include "Display.h"
 #include "Class.h"
+#include <regex> // password validation libary added by (sami)
 
 using namespace std;
 
@@ -96,9 +97,18 @@ void Admin::loadFromFile(ifstream& inFile, unordered_map<string, Admin>& admins)
         admins[email] = Admin(email, password);
     }
 }
-
-
-
+// function for password complexity
+bool validatePassword(const string& password) {
+   // regex pattern for password validation
+    regex pattern("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=])(?=\\S+$).{8,}");
+    // checking password mattches the pattern 
+    return regex_match(password, pattern);
+}
+// function for validating email format                           added by sami 
+bool validateEmail(const string& email) {
+    regex pattern(R"((\w+)(\.\w+)*@(\w+)(\.\w+)+)");
+    return regex_match(email, pattern);
+}
 // Function to hide password input
 string inputPassword() {
     string password;
@@ -124,31 +134,57 @@ void studentSignUp() {
     bool isDomestic;
 
     cout << "Enter student details for sign-up:" << endl;
-    cout << "Email: ";
-    cin >> email;
-    password = inputPassword();
-    cout << "First Name: ";
-    cin >> firstName;
-    cout << "Last Name: ";
-    cin >> lastName;
-    cout << "Course: ";
-    cin >> course;
-    cout << "Is Domestic (1 for Yes, 0 for No): ";
-    cin >> isDomestic;
-
-    Student newStudent(email, password, firstName, lastName, course, isDomestic);
-    students[email] = newStudent;
-
-    ofstream outFile("students.txt", ios::app);
-    if (outFile.is_open()) {
-        newStudent.saveToFile(outFile);
-        outFile.close();
-        cout << "Student registered and saved successfully!" << endl;
+    while (true) {
+        cout << "Email: ";
+        cin >> email;
+        if (validateEmail(email)) {
+            if (students.find(email) == students.end()) {
+                break;
+            }
+            else {
+                cout << "Email already exists. Please enter a new a different email." << endl;
+            }
+        
+        }else {
+            cout << "Invalid email format. Please try again." << endl;
+        }
     }
-    else {
-        cout << "Error saving student to file." << endl;
+    while (true) {
+        password = inputPassword();
+        if (validatePassword(password)) {
+            break;
+        }
+        else {
+            cout << "Password is invalid. Please ensure it meets the following criteria:" << endl;
+            cout << "- At least 8 characters long" << endl;
+            cout << "- Contains at least one uppercase letter" << endl;
+            cout << "- Contains at least one lowercase letter" << endl;
+            cout << "- Contains at least one digit" << endl;
+            cout << "- Contains at least one special character (e.g., @, #, $, etc.)" << endl;
+        }
     }
-}
+        cout << "First Name: ";
+        cin >> firstName;
+        cout << "Last Name: ";
+        cin >> lastName;
+        cout << "Course: ";
+        cin >> course;
+        cout << "Is Domestic (1 for Yes, 0 for No): ";
+        cin >> isDomestic;
+
+        Student newStudent(email, password, firstName, lastName, course, isDomestic);
+        students[email] = newStudent;
+
+        ofstream outFile("students.txt", ios::app);
+        if (outFile.is_open()) {
+            newStudent.saveToFile(outFile);
+            outFile.close();
+            cout << "Student registered and saved successfully!" << endl;
+        }
+        else {
+            cout << "Error saving student to file." << endl;
+        }
+    }
 
 // Function to load students from a file
 void loadStudentsFromFile() {
