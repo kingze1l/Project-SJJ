@@ -137,17 +137,18 @@ void studentSignUp() {
     while (true) {
         cout << "Email: ";
         cin >> email;
-        if (validateEmail(email)) {
-            if (students.find(email) == students.end()) {
-                break;
-            }
-            else {
-                cout << "Email already exists. Please enter a new a different email." << endl;
-            }
-        
-        }else {
+        if (!validateEmail(email)) {
             cout << "Invalid email format. Please try again." << endl;
+            continue;
         }
+
+        if (students.find(email) == students.end()) {
+            break;
+        }
+        else {
+            cout << "Email already exists. Please enter a new a different email." << endl;
+        }
+
     }
     while (true) {
         password = inputPassword();
