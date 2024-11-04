@@ -134,6 +134,7 @@
   <ItemGroup>
     <ClInclude Include="Class.h" />
     <ClInclude Include="Display.h" />
+    <ClInclude Include="UserValidation.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
