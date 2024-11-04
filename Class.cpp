@@ -19,6 +19,8 @@ string User::getEmail() const {
     return email;
 }
 
+
+
 bool Student::getIsDomestic() const {
     return isDomestic;
 }
@@ -42,6 +44,8 @@ void Student::loadFromFile(ifstream& inFile, unordered_map<string, Student>& stu
         students[email] = Student(email, password, firstName, lastName, course, isDomestic);
     }
 }
+
+
 
 // Derived Admin class
 
@@ -83,6 +87,8 @@ void Admin::removeStudent(unordered_map<string, Student>& students, string stude
     }
 }
 
+
+
 // Load admin details from a file
 void Admin::loadFromFile(ifstream& inFile, unordered_map<string, Admin>& admins) {
     string email, password;
@@ -90,6 +96,8 @@ void Admin::loadFromFile(ifstream& inFile, unordered_map<string, Admin>& admins)
         admins[email] = Admin(email, password);
     }
 }
+
+
 
 // Function to hide password input
 string inputPassword() {
@@ -168,11 +176,6 @@ bool signIn(const string& email, const string& password) {
             cout << "Admin login successful!" << endl;
             return true;
         }
-        else {
-            setColor(12);
-            cout << "Incorrect password for admin." << endl;
-            return false;
-        }
     }
 
     if (students.find(email) != students.end()) {
@@ -180,13 +183,7 @@ bool signIn(const string& email, const string& password) {
             cout << "Student login successful!" << endl;
             return true;
         }
-        else {
-            cout << "Incorrect password for student." << endl;
-            return false;
-        }
     }
-
-    cout << "Email not found." << endl;
     return false;
 }
 
