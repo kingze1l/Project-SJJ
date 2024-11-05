@@ -136,6 +136,10 @@
     <ClInclude Include="Display.h" />
     <ClInclude Include="UserValidation.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="new_admins.json" />
+    <None Include="studentnew.json" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
