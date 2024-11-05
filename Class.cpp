@@ -42,7 +42,7 @@ void Student::loadFromFile(ifstream& inFile, unordered_map<string, Student>& stu
     string email, password, firstName, lastName, course;
     bool isDomestic;
     while (inFile >> email >> password >> firstName >> lastName >> course >> isDomestic) {
-        students[email] = Student(email, password, firstName, lastName, course, isDomestic);
+        students[email] = Student(email, password, firstName, lastName, course, isDomestic );
     }
 }
 
@@ -97,6 +97,14 @@ void Admin::loadFromFile(ifstream& inFile, unordered_map<string, Admin>& admins)
         admins[email] = Admin(email, password);
     }
 }
+bool isValidAge(int age) {
+    return age >= 18;
+}
+
+bool isValidMobile(const string& mobile) { // function for validating the mobile number
+    regex pattern(R"(\d{10})");
+    return regex_match(mobile, pattern);
+}
 // function for password complexity
 bool validatePassword(const string& password) {
    // regex pattern for password validation
@@ -130,10 +138,13 @@ string inputPassword() {
 
 // Function to sign up a student and save details to a file
 void studentSignUp() {
-    string email, password, firstName, lastName, course;
+    string email, password, firstName, lastName, course, mobile, address;
     bool isDomestic;
+    int age;
 
     cout << "Enter student details for sign-up:" << endl;
+
+    // Validating email format and ensuring it's unique
     while (true) {
         cout << "Email: ";
         cin >> email;
@@ -143,19 +154,18 @@ void studentSignUp() {
         }
 
         if (students.find(email) == students.end()) {
-            break;
+            break;  // If email is unique, break the loop
+        } else {
+            cout << "Email already exists. Please enter a new, different email." << endl;
         }
-        else {
-            cout << "Email already exists. Please enter a new a different email." << endl;
-        }
-
     }
+
+    // Validating password (password must meet certain criteria)
     while (true) {
         password = inputPassword();
         if (validatePassword(password)) {
             break;
-        }
-        else {
+        } else {
             cout << "Password is invalid. Please ensure it meets the following criteria:" << endl;
             cout << "- At least 8 characters long" << endl;
             cout << "- Contains at least one uppercase letter" << endl;
@@ -164,28 +174,60 @@ void studentSignUp() {
             cout << "- Contains at least one special character (e.g., @, #, $, etc.)" << endl;
         }
     }
-        cout << "First Name: ";
-        cin >> firstName;
-        cout << "Last Name: ";
-        cin >> lastName;
-        cout << "Course: ";
-        cin >> course;
-        cout << "Is Domestic (1 for Yes, 0 for No): ";
-        cin >> isDomestic;
 
-        Student newStudent(email, password, firstName, lastName, course, isDomestic);
-        students[email] = newStudent;
+    // Collecting student details
+    cout << "First Name: ";
+    cin >> firstName;
+    cout << "Last Name: ";
+    cin >> lastName;
+    cout << "Course: ";
+    cin >> course;
+    cout << "Is Domestic (1 for Yes, 0 for No): ";
+    cin >> isDomestic;
 
-        ofstream outFile("students.txt", ios::app);
-        if (outFile.is_open()) {
-            newStudent.saveToFile(outFile);
-            outFile.close();
-            cout << "Student registered and saved successfully!" << endl;
-        }
-        else {
-            cout << "Error saving student to file." << endl;
+    // Validating age (age must be >= 18)
+    while (true) {
+        cout << "Age: ";
+        cin >> age;
+        if (isValidAge(age)) {
+            break;
+        } else {
+            cout << "Age must be 18 or older. Please enter again." << endl;
         }
     }
+
+    // Validating mobile number (must be 10 digits)
+    while (true) {
+        cout << "Mobile Number (10 digits): ";
+        cin >> mobile;
+        if (isValidMobile(mobile)) {
+            break;
+        } else {
+            cout << "Invalid mobile number. It must be 10 digits." << endl;
+        }
+    }
+
+    // Collecting the address
+    cout << "Current Address: ";
+    cin.ignore();  // To ignore any leftover newline character from previous input
+    getline(cin, address);  // Read the entire address, including spaces
+
+    // Creating a new student object with the collected details
+    Student newStudent(email, password, firstName, lastName, course, isDomestic);
+
+    // Adding the new student to the students map and saving it to the file
+    students[email] = newStudent;
+
+    ofstream outFile("students.txt", ios::app);
+    if (outFile.is_open()) {
+        newStudent.saveToFile(outFile);
+        outFile.close();
+        cout << "Student registered and saved successfully!" << endl;
+    } else {
+        cout << "Error saving student to file." << endl;
+    }
+}
+
 
 // Function to load students from a file
 void loadStudentsFromFile() {

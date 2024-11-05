@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <unordered_map>
 #include "Display.h"
@@ -24,9 +23,9 @@ int main() {
         displayMenu();
         cin >> choice;
 
-        if (choice > 2) { 
+        if (choice > 2) {
             cout << "Exiting..." << endl;
-            break; 
+            break;
         }
 
         if (choice == 1) {
@@ -38,14 +37,12 @@ int main() {
             continue;
         }
 
-        
         string email, password;
 
         setColor(10); // Green for success messages
         cout << "Sign in selected!" << endl;
         setColor(15); // Reset color
         cout << "Enter email: ";
-
         cin >> email;
         password = inputPassword();
 
@@ -55,21 +52,52 @@ int main() {
             continue;
         }
 
-        // TEMP, for now there is no functionality after signing up as a student
-        if (students.find(email) != students.end()) { 
-            cout << "Currently there's no functionality after signing in" << endl;
+        // Check if the user is a student and show their details
+        if (students.find(email) != students.end()) {
+            cout << "Login successful!" << endl;
             Sleep(1000);
-            continue; 
+
+            // Temp show the student menu to either view details again or log out (sami)/
+            int studentChoice;
+            bool keepStudentLoggedIn = true;
+
+            while (keepStudentLoggedIn) {
+                system("cls");// Clear screen for a fresh menu
+                displayLogo();
+                setColor(10);
+                cout << "\n-- Student Menu --\n";
+                setColor(13); // purple color for options
+                cout << "1. View My Details\n2. Log Out\n";
+                cout << "Choose an option: ";
+                cin >> studentChoice;
+
+                switch (studentChoice) {
+                case 1:
+                    students[email].showDetails();  // Display student details again
+                    cout << "\nPress any key to return to the menu...";
+                    _getch();  // Wait for the user to press a key , needs some robsut code to replaced with 
+                    break;
+                case 2:
+                    keepStudentLoggedIn = false;  // Log out the student and exit the loop
+                    system("cls");
+                    displayLogo();  // Show the logo when logging out
+                    break;
+                default:
+                    cout << "Invalid option. Please try again." << endl;
+                    Sleep(1000);
+                }
+            }
+            continue;  // Go back to the main menu after logging out /sami
         }
-      
-        // Below is all admin option.
-        setColor(10);
+
+        // Admin login block
+        setColor(10); // Green for success messages
         int adminChoice;
         bool keepAdminLoggedIn = true;
 
-        while (keepAdminLoggedIn) { 
+        while (keepAdminLoggedIn) {
             cout << "\n-- Admin Menu --\n";
-            setColor(12);
+            setColor(12); // Red for admin options
             cout << "1. View All Students\n2. View Domestic Students\n3. View International Students\n4. Remove a Student\n5. Sign Out\n";
             cout << "Choose an admin option: ";
             cin >> adminChoice;
@@ -100,8 +128,6 @@ int main() {
                 cout << "Invalid option. Please try again." << endl;
             }
         }
-        
-
     }
     return 0;
 }
