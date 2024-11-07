@@ -250,7 +250,7 @@ void studentSignUpJSON() {
     string email, password, firstName, lastName, course, address;
     int age;
     bool isDomestic;
-    int age;
+    
 
     cout << "Enter student details for sign-up:" << endl;
 
