@@ -1,0 +1,14 @@
+[
+    {
+        "email": "admin1@talenthub.com",
+        "password": "admin1"
+    },
+    {
+        "email": "admin2@talenthub.com",
+        "password": "anotherpassword"
+    },
+    {
+        "email": "admin3@talenthub.com",
+        "password": "securepass456"
+    }
+]

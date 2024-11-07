@@ -32,7 +32,7 @@ int main() {
             setColor(10); // Green for success messages
             cout << "Student Sign-Up selected." << endl;
             setColor(15); // Reset color
-            studentSignUp();
+            studentSignUpJSON();
             Sleep(400);
             continue;
         }

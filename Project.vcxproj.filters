@@ -36,4 +36,8 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="new_admins.json" />
+    <None Include="studentnew.json" />
+  </ItemGroup>
 </Project>

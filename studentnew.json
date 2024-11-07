@@ -1,0 +1,32 @@
+[
+    {
+        "address": "Porters Avenue",
+        "age": 18,
+        "course": "Software Engineer",
+        "email": "jasonw@gmail.com",
+        "firstName": "Jason",
+        "isDomestic": false,
+        "lastName": "William",
+        "password": "Jasw8@lala12"
+    },
+    {
+        "address": "Porters Avenue",
+        "age": 18,
+        "course": "Civil",
+        "email": "abun123@gmail.com",
+        "firstName": "Asen",
+        "isDomestic": false,
+        "lastName": "Bun",
+        "password": "Abun@lika12@"
+    },
+    {
+        "address": "Lala Avenue",
+        "age": 18,
+        "course": "18",
+        "email": "lalala@gmail.com",
+        "firstName": "Lala",
+        "isDomestic": false,
+        "lastName": "Land",
+        "password": "lalaLALA12@"
+    }
+]

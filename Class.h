@@ -29,11 +29,13 @@ private:
     std::string firstName;
     std::string lastName;
     std::string course;
+    std::string address;
+    int age;
     bool isDomestic;
 public:
     Student() = default;
-    Student(std::string email, std::string password, std::string firstName, std::string lastName, std::string course, bool isDomestic)
-        : User(email, password), firstName(firstName), lastName(lastName), course(course), isDomestic(isDomestic) {}
+    Student(std::string email, std::string password, std::string firstName, std::string lastName, std::string course, std::string address, int age, bool isDomestic)
+        : User(email, password), firstName(firstName), lastName(lastName), course(course), address(address), age(age), isDomestic(isDomestic) {}
 
     bool getIsDomestic() const;
 
@@ -44,6 +46,7 @@ public:
 
     // Load student details from a file
     static void loadFromFile(std::ifstream& inFile, std::unordered_map<std::string, Student>& students);
+    static void loadFromFileJSON(std::ifstream& inFile, std::unordered_map<std::string, Student>& students);
 
 };
 
@@ -65,6 +68,7 @@ public:
 
     // Load admin details from a file
     static void loadFromFile(std::ifstream& inFile, std::unordered_map<std::string, Admin>& admins);
+    static void loadFromFileJSON(std::ifstream& inFile, std::unordered_map<std::string, Admin>& admins);
 };
 
 
@@ -75,8 +79,12 @@ extern std::unordered_map<std::string, Admin> admins;
 // Function to hide password input
 std::string inputPassword();
 
+//Input Address
+std::string inputAddress();
+
 // Function to sign up a student and save details to a file
 void studentSignUp();
+void studentSignUpJSON();
 
 // Function to load students from a file
 void loadStudentsFromFile();
