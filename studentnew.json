@@ -28,5 +28,25 @@
         "isDomestic": false,
         "lastName": "Land",
         "password": "lalaLALA12@"
+    },
+    {
+        "address": "Tak",
+        "age": 20,
+        "course": "Tak",
+        "email": "nananana@gmail.com",
+        "firstName": "Nana",
+        "isDomestic": false,
+        "lastName": "Ana",
+        "password": "Nanan@123"
+    },
+    {
+        "address": "adasdds",
+        "age": 12,
+        "course": "adasdds",
+        "email": "nana@gmail.com",
+        "firstName": "Nna",
+        "isDomestic": false,
+        "lastName": "nan",
+        "password": "Nanan123@"
     }
 ]

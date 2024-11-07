@@ -22,8 +22,6 @@ string User::getEmail() const {
     return email;
 }
 
-
-
 bool Student::getIsDomestic() const {
     return isDomestic;
 }
@@ -37,20 +35,6 @@ void Student::showDetails() const {
     cout << "Status: " << (isDomestic ? "Domestic" : "International") << endl;
 }
 
-//void Student::saveToFile(ofstream& outFile) const {
-//
-//    outFile << email << " " << password << " " << firstName << " " << lastName << " "
-//        << course << " " << isDomestic << endl;
-//}
-
-//void Student::loadFromFile(ifstream& inFile, unordered_map<string, Student>& students) {
-//    string email, password, firstName, lastName, course;
-//    bool isDomestic;
-//    while (inFile >> email >> password >> firstName >> lastName >> course >> isDomestic) {
-//        students[email] = Student(email, password, firstName, lastName, course, isDomestic);
-//    }
-//}
-//json
 void Student::loadFromFileJSON(ifstream& inFile, unordered_map<string, Student>& students) {
     string email, password, firstName, lastName, course, address;
     int age;
@@ -112,16 +96,6 @@ void Admin::removeStudent(unordered_map<string, Student>& students, string stude
     }
 }
 
-//// Load admin details from a file 
-//void Admin::loadFromFile(ifstream& inFile, unordered_map<string, Admin>& admins) {
-//    string email, password;
-//    while (inFile >> email >> password) {
-//        admins[email] = Admin(email, password);
-//    }
-//}
-
-// Load admin details from a file 
-//change to json
 void Admin::loadFromFileJSON(ifstream& inFile, unordered_map<string, Admin>& admins) {
     string email, password;
 
@@ -132,13 +106,9 @@ void Admin::loadFromFileJSON(ifstream& inFile, unordered_map<string, Admin>& adm
         email = i["email"];
         password = i["password"];
         admins[email] = Admin(email, password);
-      /*  cout << i["email"] << "  " << i["password"] << endl;*/
     }
-
-    /*while (inFile >> email >> password) {
-        admins[email] = Admin(email, password);
-    }*/
 }
+
 bool isValidAge(int age) {
     return age >= 18;
 }
@@ -147,6 +117,7 @@ bool isValidMobile(const string& mobile) { // function for validating the mobile
     regex pattern(R"(\d{10})");
     return regex_match(mobile, pattern);
 }
+
 // function for password complexity
 bool validatePassword(const string& password) {
    // regex pattern for password validation
@@ -154,11 +125,13 @@ bool validatePassword(const string& password) {
     // checking password mattches the pattern 
     return regex_match(password, pattern);
 }
+
 // function for validating email format                           added by sami 
 bool validateEmail(const string& email) {
     regex pattern(R"((\w+)(\.\w+)*@(\w+)(\.\w+)+)");
     return regex_match(email, pattern);
 }
+
 // Function to hide password input
 string inputPassword() {
     string password;
@@ -187,71 +160,11 @@ string inputAddress() {
     return address;
 }
 
-//// Function to sign up a student and save details to a file
-//void studentSignUp() {
-//    string email, password, firstName, lastName, course;
-//    bool isDomestic;
-//
-//    cout << "Enter student details for sign-up:" << endl;
-//    while (true) {
-//        cout << "Email: ";
-//        cin >> email;
-//        if (!validateEmail(email)) {
-//            cout << "Invalid email format. Please try again." << endl;
-//            continue;
-//        }
-//
-//        if (students.find(email) == students.end()) {
-//            break;
-//        }
-//        else {
-//            cout << "Email already exists. Please enter a new a different email." << endl;
-//        }
-//
-//    }
-//    while (true) {
-//        password = inputPassword();
-//        if (validatePassword(password)) {
-//            break;
-//        }
-//        else {
-//            cout << "Password is invalid. Please ensure it meets the following criteria:" << endl;
-//            cout << "- At least 8 characters long" << endl;
-//            cout << "- Contains at least one uppercase letter" << endl;
-//            cout << "- Contains at least one lowercase letter" << endl;
-//            cout << "- Contains at least one digit" << endl;
-//            cout << "- Contains at least one special character (e.g., @, #, $, etc.)" << endl;
-//        }
-//    }
-//        cout << "First Name: ";
-//        cin >> firstName;
-//        cout << "Last Name: ";
-//        cin >> lastName;
-//        cout << "Course: ";
-//        cin >> course;
-//        cout << "Is Domestic (1 for Yes, 0 for No): ";
-//        cin >> isDomestic;
-//
-//        Student newStudent(email, password, firstName, lastName, course, isDomestic);
-//        students[email] = newStudent;
-//
-//        ofstream outFile("students.txt", ios::app);
-//        if (outFile.is_open()) {
-//            newStudent.saveToFile(outFile);
-//            outFile.close();
-//            cout << "Student registered and saved successfully!" << endl;
-//        }
-//        else {
-//            cout << "Error saving student to file." << endl;
-//        }
-//    }
-// json
 void studentSignUpJSON() {
     string email, password, firstName, lastName, course, address;
     int age;
     bool isDomestic;
     
-
     cout << "Enter student details for sign-up:" << endl;
 
     // Validating email format and ensuring it's unique
@@ -309,7 +222,6 @@ void studentSignUpJSON() {
         inputFile.close();
     }
 
-
     json studentdata{
         {"email",email},
         {"password",password},
@@ -338,7 +250,6 @@ void studentSignUpJSON() {
 void loadStudentsFromFile() {
     ifstream inFile("studentnew.json");
     if (inFile.is_open()) {
-        /*Student::loadFromFile(inFile, students);*/
         Student::loadFromFileJSON(inFile, students);
         inFile.close();
     }
@@ -348,7 +259,6 @@ void loadStudentsFromFile() {
 void loadAdminsFromFile() {
     ifstream inFile("new_admins.json");
     if (inFile.is_open()) {
-        /*Admin::loadFromFile(inFile, admins);*/
         Admin::loadFromFileJSON(inFile, admins);
         inFile.close();
     }

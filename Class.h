@@ -22,7 +22,6 @@ public:
     std::string getEmail() const;
 };
 
-
 // //Derived Student class
 class Student : public User {
 private:
@@ -45,11 +44,9 @@ public:
     void saveToFile(std::ofstream& outFile) const;
 
     // Load student details from a file
-    static void loadFromFile(std::ifstream& inFile, std::unordered_map<std::string, Student>& students);
     static void loadFromFileJSON(std::ifstream& inFile, std::unordered_map<std::string, Student>& students);
 
 };
-
 
 // Derived Admin class
 class Admin : public User {
@@ -67,11 +64,8 @@ public:
     void removeStudent(std::unordered_map<std::string, Student>& students, std::string studentEmail) const;
 
     // Load admin details from a file
-    static void loadFromFile(std::ifstream& inFile, std::unordered_map<std::string, Admin>& admins);
     static void loadFromFileJSON(std::ifstream& inFile, std::unordered_map<std::string, Admin>& admins);
 };
-
-
 
 extern std::unordered_map<std::string, Student> students;
 extern std::unordered_map<std::string, Admin> admins;
@@ -83,7 +77,6 @@ std::string inputPassword();
 std::string inputAddress();
 
 // Function to sign up a student and save details to a file
-void studentSignUp();
 void studentSignUpJSON();
 
 // Function to load students from a file
