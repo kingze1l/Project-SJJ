@@ -72,12 +72,6 @@ public:
 extern std::unordered_map<std::string, Student> students;
 extern std::unordered_map<std::string, Admin> admins;
 
-// Function to hide password input
-std::string inputPassword();
-
-//Input Address
-std::string inputAddress();
-
 // Function to sign up a student and save details to a file
 void studentSignUpJSON();
 

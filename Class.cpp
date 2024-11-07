@@ -6,10 +6,12 @@
 #include <sstream>
 #include <windows.h>
 #include <cstdlib> 
+#include <regex> // password validation libary added by (sami)
+
+#include "nlohmann/json.hpp"
 #include "Display.h"
 #include "Class.h"
-#include <regex> // password validation libary added by (sami)
-#include "nlohmann/json.hpp"
+#include "validation.h"
 
 using namespace std;
 using namespace nlohmann;
@@ -119,105 +121,34 @@ void Admin::loadFromFileJSON(ifstream& inFile, unordered_map<string, Admin>& adm
     }
 }
 
-bool isValidAge(int age) {
-    return age >= 18;
-}
-
-bool isValidMobile(const string& mobile) { // function for validating the mobile number
-    regex pattern(R"(\d{10})");
-    return regex_match(mobile, pattern);
-}
-
-// function for password complexity
-bool validatePassword(const string& password) {
-   // regex pattern for password validation
-    regex pattern("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()-_+=])(?=\\S+$).{8,}");
-    // checking password mattches the pattern 
-    return regex_match(password, pattern);
-}
-
-// function for validating email format                           added by sami 
-bool validateEmail(const string& email) {
-    regex pattern(R"((\w+)(\.\w+)*@(\w+)(\.\w+)+)");
-    return regex_match(email, pattern);
-}
-
-// Function to hide password input
-string inputPassword() {
-    string password;
-    char ch;
-    cout << "Enter password: ";
-    while ((ch = _getch()) != '\r') { // '\r' is Enter key in Windows
-        if (ch == '\b' && !password.empty()) { // Handle backspace
-            password.pop_back();
-            cout << "\b \b";
-        }
-        else if (ch != '\b') {
-            password.push_back(ch);
-            cout << '*';
-        }
-    }
-    cout << endl;
-    return password;
-}
-string inputAddress() {
-    string address{};
-    cout << "Address: ";
-    cin.clear();
-    cin.ignore();
-    getline(cin, address);
-
-    return address;
-}
+// TEMP: Is there a need for this?
+//bool isValidMobile(const string& mobile) { // function for validating the mobile number
+//    regex pattern(R"(\d{10})");
+//    return regex_match(mobile, pattern);
+//}
 
 void studentSignUpJSON() {
     string email, password, firstName, lastName, course, address;
     int age;
     bool isDomestic;
+    Validation validation;
     
     cout << "Enter student details for sign-up:" << endl;
+    email = validation.inputEmailValidation();
+    password = validation.inputPasswordValidation();
 
-    // Validating email format and ensuring it's unique
-    while (true) {
-        cout << "Email: ";
-        cin >> email;
-        if (!validateEmail(email)) {
-            cout << "Invalid email format. Please try again." << endl;
-            continue;
-        }
-
-        if (students.find(email) == students.end()) {
-            break;  // If email is unique, break the loop
-        } else {
-            cout << "Email already exists. Please enter a new, different email." << endl;
-        }
-    }
-
-    // Validating password (password must meet certain criteria)
-    while (true) {
-        password = inputPassword();
-        if (validatePassword(password)) {
-            break;
-        } else {
-            cout << "Password is invalid. Please ensure it meets the following criteria:" << endl;
-            cout << "- At least 8 characters long" << endl;
-            cout << "- Contains at least one uppercase letter" << endl;
-            cout << "- Contains at least one lowercase letter" << endl;
-            cout << "- Contains at least one digit" << endl;
-            cout << "- Contains at least one special character (e.g., @, #, $, etc.)" << endl;
-        }
-    }
     cout << "First Name: ";
     cin >> firstName;
     cout << "Last Name: ";
     cin >> lastName;
     cout << "Age: ";
-    cin >> age;
 
-    address = inputAddress();
+    age = validation.inputAgeValidation();
+    address = validation.inputAddress();
 
     cout << "Course: ";
     getline(cin, course);
+
     cout << "Is Domestic (1 for Yes, 0 for No): ";
     cin >> isDomestic;
 

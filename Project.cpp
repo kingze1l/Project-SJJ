@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include "Display.h"
 #include "Class.h"
+#include "validation.h"
 
 using namespace std;
 
@@ -11,6 +12,7 @@ unordered_map<string, Admin> admins;
 
 // Main function
 int main() {
+    Validation validation;
     // Get the text from file
     loadStudentsFromFile();
     loadAdminsFromFile();
@@ -33,18 +35,17 @@ int main() {
             cout << "Student Sign-Up selected." << endl;
             setColor(15); // Reset color
             studentSignUpJSON();
-            Sleep(400);
+            Sleep(1000);
             continue;
         }
 
         string email, password;
-
         setColor(10); // Green for success messages
         cout << "Sign in selected!" << endl;
         setColor(15); // Reset color
         cout << "Enter email: ";
         cin >> email;
-        password = inputPassword();
+        password = validation.inputPassword();
 
         if (!(signIn(email, password))) {
             cout << "Incorrect password or email." << endl;
