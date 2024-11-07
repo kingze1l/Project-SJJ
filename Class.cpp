@@ -29,7 +29,9 @@ bool Student::getIsDomestic() const {
 }
 
 void Student::showDetails() const {
-    cout << "Student Name: " << firstName << " " << lastName << endl;
+    cout << "Student's Name: " << firstName << " " << lastName << endl;
+    cout << "Student's Age: " << age << endl;
+    cout << "Student's Address: " << address << endl;
     cout << "Email: " << email << endl;
     cout << "Course: " << course << endl;
     cout << "Status: " << (isDomestic ? "Domestic" : "International") << endl;
