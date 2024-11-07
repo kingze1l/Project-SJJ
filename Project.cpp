@@ -114,6 +114,8 @@ int main() {
                 break;
             case 4: {
                 string studentEmail;
+               admins[email].viewAllStudentsEmail(students);
+
                 cout << "Enter student email to remove: ";
                 cin >> studentEmail;
                 admins[email].removeStudent(students, studentEmail);

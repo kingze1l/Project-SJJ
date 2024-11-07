@@ -65,6 +65,8 @@ public:
 
     // Load admin details from a file
     static void loadFromFileJSON(std::ifstream& inFile, std::unordered_map<std::string, Admin>& admins);
+
+    void viewAllStudentsEmail(const std::unordered_map<std::string, Student>& students) const;
 };
 
 extern std::unordered_map<std::string, Student> students;

@@ -86,6 +86,16 @@ void Admin::viewInternationalStudents(const unordered_map<string, Student>& stud
     }
 }
 
+void Admin::viewAllStudentsEmail(const std::unordered_map<std::string, Student>& students) const {
+    int counter{};
+    cout << "\n-- All Students' Email --" << endl;
+    for (const auto& pair : students) {
+        counter++;
+        cout << counter <<". " << pair.second.getEmail() << endl;
+    }
+    cout << "-----------------" << endl;
+}
+
 void Admin::removeStudent(unordered_map<string, Student>& students, string studentEmail) const {
     if (students.find(studentEmail) != students.end()) {
         students.erase(studentEmail);
