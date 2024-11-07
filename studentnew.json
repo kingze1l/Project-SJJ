@@ -48,5 +48,35 @@
         "isDomestic": false,
         "lastName": "nan",
         "password": "Nanan123@"
+    },
+    {
+        "address": "SOFTWARE",
+        "age": 18,
+        "course": "SOFTWARE",
+        "email": "joan@gmail.com",
+        "firstName": "Joan",
+        "isDomestic": false,
+        "lastName": "Allysen",
+        "password": "Password1231"
+    },
+    {
+        "address": "fed",
+        "age": 12,
+        "course": "fed",
+        "email": "newemail@gmail.com",
+        "firstName": "joan",
+        "isDomestic": false,
+        "lastName": "aksja",
+        "password": "JoanJoan123!"
+    },
+    {
+        "address": "askdhaj askdsjka",
+        "age": 13,
+        "course": "askdhaj askdsjka",
+        "email": "jj@gmail.com",
+        "firstName": "Joan",
+        "isDomestic": true,
+        "lastName": "Allysn",
+        "password": "Password123#"
     }
 ]

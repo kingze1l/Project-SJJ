@@ -117,7 +117,7 @@ int main() {
                admins[email].viewAllStudentsEmail(students);
 
                 cout << "Enter student email to remove: ";
-                cin >> studentEmail;
+                getline(cin, studentEmail);
                 admins[email].removeStudent(students, studentEmail);
                 break;
             }

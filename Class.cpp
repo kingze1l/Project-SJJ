@@ -131,7 +131,7 @@ bool isValidMobile(const string& mobile) { // function for validating the mobile
 // function for password complexity
 bool validatePassword(const string& password) {
    // regex pattern for password validation
-    regex pattern("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=])(?=\\S+$).{8,}");
+    regex pattern("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()-_+=])(?=\\S+$).{8,}");
     // checking password mattches the pattern 
     return regex_match(password, pattern);
 }
@@ -217,7 +217,7 @@ void studentSignUpJSON() {
     address = inputAddress();
 
     cout << "Course: ";
-    cin >> course;
+    getline(cin, course);
     cout << "Is Domestic (1 for Yes, 0 for No): ";
     cin >> isDomestic;
 
