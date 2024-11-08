@@ -16,6 +16,8 @@ private:
 	bool isValidEmail(const std::string& email);
 
 public:
+	/*std::string inputCourseString*/
+	int inputNumber();
 	std::string inputPassword();
 	std::string inputEmailValidation();
 	std::string inputPasswordValidation();

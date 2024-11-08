@@ -17,7 +17,17 @@ bool Validation::isValidEmail(const string& email) {
     return regex_match(email, pattern);
 }
 
-
+int Validation::inputNumber() {
+    int num{};
+    cin >> num;
+    while (cin.fail()) {
+        cin.clear();
+        cin.ignore(1000, '\n');
+        cout << "Please input a number!\nOption: ";
+        cin >> num;
+    }
+    return num;
+}
 string Validation::inputPassword() {
     string password;
     char ch;
