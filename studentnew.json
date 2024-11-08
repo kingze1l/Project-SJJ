@@ -148,5 +148,15 @@
         "isDomestic": true,
         "lastName": "a'",
         "password": "asda123JHSJKDFHJ^^^"
+    },
+    {
+        "address": "a",
+        "age": 18,
+        "course": "a",
+        "email": "a@a.com",
+        "firstName": "a",
+        "isDomestic": true,
+        "lastName": "a",
+        "password": "123!qweQWE"
     }
 ]

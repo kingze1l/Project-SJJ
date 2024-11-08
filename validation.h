@@ -2,10 +2,9 @@
 #ifndef USERVALIDATION_H
 #define USERVALIDATION_H
 
-#include <regex>
 #include <iostream>
-#include <string>
 #include <unordered_map>
+
 #include "Class.h"
 
 extern std::unordered_map<std::string, Student> students;
