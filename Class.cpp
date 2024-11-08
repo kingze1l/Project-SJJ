@@ -5,8 +5,8 @@
 #include <conio.h>  // For _getch() to hide password input on Windows
 #include <sstream>
 #include <windows.h>
-#include <cstdlib> 
-#include <regex> // password validation libary added by (sami)
+#include <cstdlib>
+#include <regex> // password validation library added by (sami)
 
 #include "nlohmann/json.hpp"
 #include "Display.h"
@@ -25,7 +25,7 @@ string User::getEmail() const {
     return email;
 }
 
-// STUDENT 
+// STUDENT
 
 bool Student::getIsDomestic() const {
     return isDomestic;
@@ -36,15 +36,43 @@ void Student::showDetails() const {
     cout << "Student's Age: " << age << endl;
     cout << "Student's Address: " << address << endl;
     cout << "Email: " << email << endl;
-    cout << "Course: " << course << endl;
     cout << "Status: " << (isDomestic ? "Domestic" : "International") << endl;
+    cout << "Courses: ";
+    for (const auto& course : students[email].getCourses()) {
+        cout << course << endl;  // Each course will be printed on a new line
+    }
+    cout << endl;
+}
+
+void Student::addCourse(const string& course) {
+    if (courses.size() < 3) {
+        courses.push_back(course);
+    }
+    else {
+        cout << "You can only select a maximum of three courses." << endl;
+    }
+}
+
+void Student::removeCourse(const string& course) {  // funcvtion for student to remove courses 
+    auto it = std::find(courses.begin(), courses.end(), course);
+    if (it != courses.end()) {
+        courses.erase(it);                                                   
+    }
+    else {
+        cout << "Course not found!" << endl;
+    }
+}
+
+// Implementing the getter for courses so can be used widely (Sami)
+vector<string> Student::getCourses() const {
+    return courses;
 }
 
 void Student::loadFromFileJSON(ifstream& inFile, unordered_map<string, Student>& students) {
-    string email, password, firstName, lastName, course, address;
+    string email, password, firstName, lastName, address;
     int age;
     bool isDomestic;
-
+    vector<string> courses; // array to hold courses for the student 
     json inFiledata;
     inFile >> inFiledata;
 
@@ -53,13 +81,14 @@ void Student::loadFromFileJSON(ifstream& inFile, unordered_map<string, Student>&
         password = i["password"];
         firstName = i["firstName"];
         lastName = i["lastName"];
-        course = i["course"];
         address = i["address"];
         age = i["age"];
         isDomestic = i["isDomestic"];
-        students[email] = Student(email, password, firstName, lastName, course, address, age, isDomestic);
+        for (const auto& course : i["courses"]) {
+            courses.push_back(course);
+        }
+        students[email] = Student(email, password, firstName, lastName, address, age, isDomestic, courses);
     }
-
 }
 
 // ADMIN
@@ -96,7 +125,7 @@ void Admin::viewAllStudentsEmail(const std::unordered_map<std::string, Student>&
     cout << "\n-- All Students' Email --" << endl;
     for (const auto& pair : students) {
         counter++;
-        cout << counter <<". " << pair.second.getEmail() << endl;
+        cout << counter << ". " << pair.second.getEmail() << endl;
     }
     cout << "-----------------" << endl;
 }
@@ -116,7 +145,7 @@ void Admin::loadFromFileJSON(ifstream& inFile, unordered_map<string, Admin>& adm
 
     json inFiledata;
     inFile >> inFiledata;
-    
+
     for (auto& i : inFiledata) {
         email = i["email"];
         password = i["password"];
@@ -124,18 +153,14 @@ void Admin::loadFromFileJSON(ifstream& inFile, unordered_map<string, Admin>& adm
     }
 }
 
-// TEMP: Is there a need for this?
-//bool isValidMobile(const string& mobile) { // function for validating the mobile number
-//    regex pattern(R"(\d{10})");
-//    return regex_match(mobile, pattern);
-//}
+vector<string> selectCourses(); // Forward declaration
 
 void studentSignUpJSON() {
-    string email, password, firstName, lastName, course, address;
+    string email, password, firstName, lastName, address;
     int age;
     bool isDomestic;
+    vector<string> selectedCourses; // vector to hold the selected courses by the student (sami)
     Validation validation;
-    
     cout << "Enter student details for sign-up:" << endl;
     email = validation.inputEmailValidation();
     password = validation.inputPasswordValidation();
@@ -149,13 +174,12 @@ void studentSignUpJSON() {
     age = validation.inputAgeValidation();
     address = validation.inputAddress();
 
-    cout << "Course: ";
-    getline(cin, course);
-
     cout << "Is Domestic (1 for Yes, 0 for No): ";
     cin >> isDomestic;
 
-    Student newStudent(email, password, firstName, lastName, course, address, age, isDomestic);
+    selectedCourses = selectCourses();
+
+    Student newStudent(email, password, firstName, lastName, address, age, isDomestic, selectedCourses); //created a new student with the selected courses 
     students[email] = newStudent;
 
     ifstream inputFile("studentnew.json");
@@ -167,20 +191,20 @@ void studentSignUpJSON() {
     }
 
     json studentdata{
-        {"email",email},
-        {"password",password},
-        {"firstName",firstName},
-        {"lastName",lastName},
-        {"course", course},
-        {"address",course},
-        {"age",age},
+        {"email", email},
+        {"password", password},
+        {"firstName", firstName},
+        {"lastName", lastName},
+        {"address", address},
+        {"age", age},
         {"isDomestic", isDomestic},
+        {"courses", selectedCourses} // saves the courses as an array in json even though it's a vector (sami)
     };
+
     existingdata.push_back(studentdata);
 
     ofstream outFile("studentnew.json");
     if (outFile.is_open()) {
-        
         outFile << existingdata.dump(4);
         outFile.close();
         cout << "Student registered and saved successfully!" << endl;
@@ -190,34 +214,79 @@ void studentSignUpJSON() {
     }
 }
 
-void studentLogin(const string &email) {
+void studentLogin(const string& email) {
     setColor(10);
     cout << "Student login successful!" << endl;
     Sleep(1000);
 
-    // Temp show the student menu to either view details again or log out (sami)/
     int studentChoice;
     bool keepStudentLoggedIn = true;
 
     while (keepStudentLoggedIn) {
-        system("cls");// Clear screen for a fresh menu
+        system("cls");
         displayLogo();
         setColor(10);
         cout << "\n-- Student Menu --\n";
-        setColor(13); // purple color for options
-        cout << "1. View My Details\n2. Log Out\n";
+        setColor(13); // Purple color for options
+        cout << "1. View My Details\n";
+        cout << "2. View My Courses\n";
+        cout << "3. Add More Courses\n";
+        cout << "4. Remove Course\n";  // New option for removing courses
+        cout << "5. Log Out\n";        // Adjusted menu
         cout << "Choose an option: ";
         cin >> studentChoice;
 
         switch (studentChoice) {
         case 1:
-            students[email].showDetails();  // Display student details again
+            students[email].showDetails();
             cout << "\nPress any key to return to student menu...";
-            _getch();  // Wait for the user to press a key , needs some robsut code to replaced with 
+            _getch();
             break;
         case 2:
+            cout << "\nYour Courses: " << endl;
+            for (const string& course : students[email].getCourses()) {
+                cout << "- " << course << endl;
+            }
+            cout << "\nPress any key to return to student menu...";
+            _getch();
+            break;
+        case 3: {
+            vector<string> newCourses = selectCourses();
+            for (const string& course : newCourses) {
+                students[email].addCourse(course);
+            }
+            cout << "Courses added successfully!" << endl;
+            Sleep(1000);
+            break;
+        }
+        case 4: {
+            // Allow removing a course
+            cout << "Select a course to remove:\n";
+            const auto& courses = students[email].getCourses();
+            for (size_t i = 0; i < courses.size(); ++i) {
+                cout << (i + 1) << ". " << courses[i] << endl;
+            }
+            cout << "Enter the number of the course to remove (or 0 to cancel): ";
+            int courseChoice;
+            cin >> courseChoice;
+
+            if (courseChoice > 0 && courseChoice <= courses.size()) {
+                string courseToRemove = courses[courseChoice - 1];
+                students[email].removeCourse(courseToRemove);
+                cout << "Course \"" << courseToRemove << "\" removed successfully!" << endl;
+            }
+            else if (courseChoice == 0) {
+                cout << "No course removed." << endl;
+            }
+            else {
+                cout << "Invalid selection." << endl;
+            }
+            Sleep(1000);
+            break;
+        }
+        case 5:
             cout << "Logging out...";
-            keepStudentLoggedIn = false;  // Log out the student and exit the loop
+            keepStudentLoggedIn = false;
             break;
         default:
             cout << "Invalid option. Please try again." << endl;
@@ -226,19 +295,18 @@ void studentLogin(const string &email) {
     }
 }
 
-void adminLogin(string &email) {
+void adminLogin(string& email) {
     setColor(12);
     cout << "Admin login successful!" << endl;
     Sleep(1000);
 
-    
     int adminChoice;
     bool keepAdminLoggedIn = true;
 
     while (keepAdminLoggedIn) {
         system("cls");
         displayLogo();
-        
+
         cout << "\n-- Admin Menu --\n";
         setColor(12); // Red for admin options
         cout << "1. View All Students\n2. View Domestic Students\n3. View International Students\n4. Remove a Student\n5. Sign Out\n";
@@ -286,15 +354,59 @@ void adminLogin(string &email) {
     }
 }
 
+// function to allow the student to select courses
+vector<string> selectCourses() {
+    vector<string> availableCourses = { "Certificate in Creative Media", "Diploma in Digital Design – Web and Graphic Design", "Bachelor of Software Engineering", "Diploma in Creative Digital Design", "Diploma in Software Development", "Diploma in Film and Content Creation" };
+    vector<string> selectedCourses;
+    int courseChoice;
+
+    cout << "Select your first course (1-6): ";
+    // Display available courses to the student
+    for (int i = 0; i < availableCourses.size(); ++i) {
+        cout << (i + 1) << ". " << availableCourses[i] << endl;
+    }
+
+    cin >> courseChoice;
+    if (courseChoice < 1 || courseChoice > availableCourses.size()) {
+        cout << "Invalid course selection!" << endl;
+        return selectedCourses;  // Return empty vector if invalid    
+    }
+
+    // Adding the first selected course
+    selectedCourses.push_back(availableCourses[courseChoice - 1]);
+
+    // Allow student to choose up to two more courses
+    while (selectedCourses.size() < 3) {
+        cout << "Select another course (or enter 0 to stop selecting): ";
+        cin >> courseChoice;
+        if (courseChoice == 0) {
+            break;  // Stop selecting if user choice is 0        
+        }
+        if (courseChoice < 1 || courseChoice > availableCourses.size()) {
+            cout << "Invalid course selection!" << endl;
+            continue;
+        }
+
+        // making sure no duplicates are recorded
+        if (find(selectedCourses.begin(), selectedCourses.end(), availableCourses[courseChoice - 1]) != selectedCourses.end()) {
+            cout << "You have already selected this course!" << endl;
+        }
+        else {
+            selectedCourses.push_back(availableCourses[courseChoice - 1]);
+        }
+    }
+    return selectedCourses;
+}
+
 void signInProcedure() {
     Validation v;
     string email, password;
-    
+
     cin.clear(); cin.ignore(1000, '\n');
     while (true) {
         cout << "Enter email: ";
         getline(cin, email);
-        
+
         password = v.inputPassword();
 
         if (signIn(email, password)) {
@@ -309,13 +421,13 @@ void signInProcedure() {
         studentLogin(email);
         return;
     }
-    // not really needed but make life a whole lot easier, code more readable
+    // not really needed but makes life a whole lot easier, code more readable
     if (admins.find(email) != admins.end()) {
         adminLogin(email);
         return;
     }
 
-    cout << "System failed to detect whether the email belong to the user or an admin" << endl;
+    cout << "System failed to detect whether the email belongs to the user or an admin" << endl;
     return;
 }
 
@@ -353,5 +465,3 @@ bool signIn(const string& email, const string& password) {
     }
     return false;
 }
-
-
