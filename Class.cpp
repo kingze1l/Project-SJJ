@@ -6,14 +6,17 @@
 #include <sstream>
 #include <windows.h>
 #include <cstdlib> 
+#include <regex> // password validation libary added by (sami)
+
+#include "nlohmann/json.hpp"
 #include "Display.h"
 #include "Class.h"
-#include <regex> // password validation libary added by (sami)
-#include "nlohmann/json.hpp"
+#include "validation.h"
 
 using namespace std;
 using namespace nlohmann;
 
+// USER
 bool User::login(string inputEmail, string inputPassword) {
     return (email == inputEmail && password == inputPassword);
 }
@@ -21,6 +24,8 @@ bool User::login(string inputEmail, string inputPassword) {
 string User::getEmail() const {
     return email;
 }
+
+// STUDENT 
 
 bool Student::getIsDomestic() const {
     return isDomestic;
@@ -57,7 +62,7 @@ void Student::loadFromFileJSON(ifstream& inFile, unordered_map<string, Student>&
 
 }
 
-// Derived Admin class
+// ADMIN
 void Admin::viewAllStudents(const unordered_map<string, Student>& students) const {
     cout << "\n-- All Students --" << endl;
     for (const auto& pair : students) {
@@ -119,105 +124,34 @@ void Admin::loadFromFileJSON(ifstream& inFile, unordered_map<string, Admin>& adm
     }
 }
 
-bool isValidAge(int age) {
-    return age >= 18;
-}
-
-bool isValidMobile(const string& mobile) { // function for validating the mobile number
-    regex pattern(R"(\d{10})");
-    return regex_match(mobile, pattern);
-}
-
-// function for password complexity
-bool validatePassword(const string& password) {
-   // regex pattern for password validation
-    regex pattern("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()-_+=])(?=\\S+$).{8,}");
-    // checking password mattches the pattern 
-    return regex_match(password, pattern);
-}
-
-// function for validating email format                           added by sami 
-bool validateEmail(const string& email) {
-    regex pattern(R"((\w+)(\.\w+)*@(\w+)(\.\w+)+)");
-    return regex_match(email, pattern);
-}
-
-// Function to hide password input
-string inputPassword() {
-    string password;
-    char ch;
-    cout << "Enter password: ";
-    while ((ch = _getch()) != '\r') { // '\r' is Enter key in Windows
-        if (ch == '\b' && !password.empty()) { // Handle backspace
-            password.pop_back();
-            cout << "\b \b";
-        }
-        else if (ch != '\b') {
-            password.push_back(ch);
-            cout << '*';
-        }
-    }
-    cout << endl;
-    return password;
-}
-string inputAddress() {
-    string address{};
-    cout << "Address: ";
-    cin.clear();
-    cin.ignore();
-    getline(cin, address);
-
-    return address;
-}
+// TEMP: Is there a need for this?
+//bool isValidMobile(const string& mobile) { // function for validating the mobile number
+//    regex pattern(R"(\d{10})");
+//    return regex_match(mobile, pattern);
+//}
 
 void studentSignUpJSON() {
     string email, password, firstName, lastName, course, address;
     int age;
     bool isDomestic;
+    Validation validation;
     
     cout << "Enter student details for sign-up:" << endl;
+    email = validation.inputEmailValidation();
+    password = validation.inputPasswordValidation();
 
-    // Validating email format and ensuring it's unique
-    while (true) {
-        cout << "Email: ";
-        cin >> email;
-        if (!validateEmail(email)) {
-            cout << "Invalid email format. Please try again." << endl;
-            continue;
-        }
-
-        if (students.find(email) == students.end()) {
-            break;  // If email is unique, break the loop
-        } else {
-            cout << "Email already exists. Please enter a new, different email." << endl;
-        }
-    }
-
-    // Validating password (password must meet certain criteria)
-    while (true) {
-        password = inputPassword();
-        if (validatePassword(password)) {
-            break;
-        } else {
-            cout << "Password is invalid. Please ensure it meets the following criteria:" << endl;
-            cout << "- At least 8 characters long" << endl;
-            cout << "- Contains at least one uppercase letter" << endl;
-            cout << "- Contains at least one lowercase letter" << endl;
-            cout << "- Contains at least one digit" << endl;
-            cout << "- Contains at least one special character (e.g., @, #, $, etc.)" << endl;
-        }
-    }
     cout << "First Name: ";
     cin >> firstName;
     cout << "Last Name: ";
     cin >> lastName;
     cout << "Age: ";
-    cin >> age;
 
-    address = inputAddress();
+    age = validation.inputAgeValidation();
+    address = validation.inputAddress();
 
     cout << "Course: ";
     getline(cin, course);
+
     cout << "Is Domestic (1 for Yes, 0 for No): ";
     cin >> isDomestic;
 
@@ -256,6 +190,135 @@ void studentSignUpJSON() {
     }
 }
 
+void studentLogin(const string &email) {
+    setColor(10);
+    cout << "Student login successful!" << endl;
+    Sleep(1000);
+
+    // Temp show the student menu to either view details again or log out (sami)/
+    int studentChoice;
+    bool keepStudentLoggedIn = true;
+
+    while (keepStudentLoggedIn) {
+        system("cls");// Clear screen for a fresh menu
+        displayLogo();
+        setColor(10);
+        cout << "\n-- Student Menu --\n";
+        setColor(13); // purple color for options
+        cout << "1. View My Details\n2. Log Out\n";
+        cout << "Choose an option: ";
+        cin >> studentChoice;
+
+        switch (studentChoice) {
+        case 1:
+            students[email].showDetails();  // Display student details again
+            cout << "\nPress any key to return to student menu...";
+            _getch();  // Wait for the user to press a key , needs some robsut code to replaced with 
+            break;
+        case 2:
+            cout << "Logging out...";
+            keepStudentLoggedIn = false;  // Log out the student and exit the loop
+            break;
+        default:
+            cout << "Invalid option. Please try again." << endl;
+            Sleep(1000);
+        }
+    }
+}
+
+void adminLogin(string &email) {
+    setColor(12);
+    cout << "Admin login successful!" << endl;
+    Sleep(1000);
+
+    
+    int adminChoice;
+    bool keepAdminLoggedIn = true;
+
+    while (keepAdminLoggedIn) {
+        system("cls");
+        displayLogo();
+        
+        cout << "\n-- Admin Menu --\n";
+        setColor(12); // Red for admin options
+        cout << "1. View All Students\n2. View Domestic Students\n3. View International Students\n4. Remove a Student\n5. Sign Out\n";
+        cout << "Choose an admin option: ";
+        cin >> adminChoice;
+
+        switch (adminChoice) {
+        case 1:
+            system("cls");
+            admins[email].viewAllStudents(students);
+            cout << "\nPress any key to return to admin menu...";
+            _getch();
+            break;
+        case 2:
+            system("cls");
+            admins[email].viewDomesticStudents(students);
+            cout << "\nPress any key to return to admin menu...";
+            _getch();
+            break;
+        case 3:
+            system("cls");
+            admins[email].viewInternationalStudents(students);
+            cout << "\nPress any key to return to admin menu...";
+            _getch();
+            break;
+        case 4: {
+            system("cls");
+            string studentEmail;
+            admins[email].viewAllStudentsEmail(students);
+
+            cout << "Enter student email to remove: ";
+            cin.clear(); cin.ignore(1000, '\n');
+            getline(cin, studentEmail);
+            admins[email].removeStudent(students, studentEmail);
+            Sleep(1000);
+            break;
+        }
+        case 5:
+            cout << "Logging out...";
+            keepAdminLoggedIn = false; // Exit admin menu
+            break;
+        default:
+            cout << "Invalid option. Please try again." << endl;
+        }
+    }
+}
+
+void signInProcedure() {
+    Validation v;
+    string email, password;
+    
+    cin.clear(); cin.ignore(1000, '\n');
+    while (true) {
+        cout << "Enter email: ";
+        getline(cin, email);
+        
+        password = v.inputPassword();
+
+        if (signIn(email, password)) {
+            break;
+        }
+
+        cout << "Incorrect password or email, please enter again!" << endl;
+    }
+
+    // Check if the user is a student and show their details
+    if (students.find(email) != students.end()) {
+        studentLogin(email);
+        return;
+    }
+    // not really needed but make life a whole lot easier, code more readable
+    if (admins.find(email) != admins.end()) {
+        adminLogin(email);
+        return;
+    }
+
+    cout << "System failed to detect whether the email belong to the user or an admin" << endl;
+    return;
+}
+
 // Function to load students from a file
 void loadStudentsFromFile() {
     ifstream inFile("studentnew.json");
@@ -279,14 +342,12 @@ bool signIn(const string& email, const string& password) {
     if (admins.find(email) != admins.end()) {
         if (admins[email].login(email, password)) {
             setColor(10);
-            cout << "Admin login successful!" << endl;
             return true;
         }
     }
 
     if (students.find(email) != students.end()) {
         if (students[email].login(email, password)) {
-            cout << "Student login successful!" << endl;
             return true;
         }
     }

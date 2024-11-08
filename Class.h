@@ -40,12 +40,8 @@ public:
 
     void showDetails() const;
 
-    // Save student details to a file
-    void saveToFile(std::ofstream& outFile) const;
-
     // Load student details from a file
     static void loadFromFileJSON(std::ifstream& inFile, std::unordered_map<std::string, Student>& students);
-
 };
 
 // Derived Admin class
@@ -72,14 +68,12 @@ public:
 extern std::unordered_map<std::string, Student> students;
 extern std::unordered_map<std::string, Admin> admins;
 
-// Function to hide password input
-std::string inputPassword();
-
-//Input Address
-std::string inputAddress();
-
 // Function to sign up a student and save details to a file
 void studentSignUpJSON();
+
+void studentLogin(const std::string &email);
+void adminLogin(const std::string &email);
+void signInProcedure();
 
 // Function to load students from a file
 void loadStudentsFromFile();

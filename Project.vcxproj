@@ -130,11 +130,12 @@
     <ClCompile Include="Class.cpp" />
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="Project.cpp" />
+    <ClCompile Include="validation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class.h" />
     <ClInclude Include="Display.h" />
-    <ClInclude Include="UserValidation.h" />
+    <ClInclude Include="validation.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="new_admins.json" />

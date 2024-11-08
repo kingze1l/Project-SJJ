@@ -1,4 +1,0 @@
-admin1@talenthub.com admin1
-admin2@talenthub.com anotherpassword
-admin3@talenthub.com securepass456
-
