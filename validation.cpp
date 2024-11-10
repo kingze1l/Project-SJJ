@@ -28,6 +28,7 @@ int Validation::inputNumber() {
     }
     return num;
 }
+
 string Validation::inputPassword() {
     string password;
     char ch;
