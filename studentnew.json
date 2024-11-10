@@ -158,5 +158,17 @@
         "isDomestic": true,
         "lastName": "a",
         "password": "123!qweQWE"
+    },
+    {
+        "address": "trevola street new windsor ",
+        "age": 18,
+        "courses": [
+            "Bachelor of Software Engineering"
+        ],
+        "email": "sami@11.com",
+        "firstName": "sami",
+        "isDomestic": false,
+        "lastName": "jan",
+        "password": "Sami@123"
     }
 ]

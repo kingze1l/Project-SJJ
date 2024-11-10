@@ -31,14 +31,20 @@ private:
     std::string address;
     int age;
     bool isDomestic;
+    std::vector<std::string> courses;
+
 public:
     Student() = default;
-    Student(std::string email, std::string password, std::string firstName, std::string lastName, std::string course, std::string address, int age, bool isDomestic)
-        : User(email, password), firstName(firstName), lastName(lastName), course(course), address(address), age(age), isDomestic(isDomestic) {}
+    Student(std::string email, std::string password, std::string firstName, std::string lastName, std::string address, int age, bool isDomestic , std::vector<std::string> courses)
+        : User(email, password), firstName(firstName), lastName(lastName), address(address), age(age), isDomestic(isDomestic) , courses(courses) {}
 
     bool getIsDomestic() const;
 
     void showDetails() const;
+
+    std::vector<std::string> getCourses() const; // this is a getter for courses. (sami)
+    void removeCourse(const std::string& course); // added so we student can remove courses
+    void addCourse(const std::string& course); // function to add a course 
 
     // Load student details from a file
     static void loadFromFileJSON(std::ifstream& inFile, std::unordered_map<std::string, Student>& students);
