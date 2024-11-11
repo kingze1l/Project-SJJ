@@ -17,7 +17,7 @@ private:
 
 public:
 	/*std::string inputCourseString*/
-	int inputNumber();
+	int inputNumber(const int& numOfOption);
 	std::string inputPassword();
 	std::string inputEmailValidation();
 	std::string inputPasswordValidation();

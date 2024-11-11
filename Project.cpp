@@ -23,7 +23,7 @@ int main() {
         system("cls");
         displayLogo();
         displayMenu();
-        choice = validation.inputNumber();
+        choice = validation.inputNumber(3);
 
         if (choice > 2) {
             cout << "Exiting..." << endl;
