@@ -32,9 +32,10 @@ bool Student::getIsDomestic() const {
 }
 
 void Student::showDetails() const {
-    cout << "Student's Name: " << firstName << " " << lastName << endl;
+    cout << "Student's Name: " << fullName << endl;
     cout << "Student's Age: " << age << endl;
     cout << "Student's Address: " << address << endl;
+    cout << "Student's Mobile Number: " << mobile << endl;
     cout << "Email: " << email << endl;
     cout << "Status: " << (isDomestic ? "Domestic" : "International") << endl;
     cout << "Courses: ";
@@ -69,7 +70,7 @@ vector<string> Student::getCourses() const {
 }
 
 void Student::loadFromFileJSON(ifstream& inFile, unordered_map<string, Student>& students) {
-    string email, password, firstName, lastName, address;
+    string email, password, firstName, lastName, fullName, mobile, address;
     int age;
     bool isDomestic;
     vector<string> courses; // array to hold courses for the student 
@@ -81,13 +82,15 @@ void Student::loadFromFileJSON(ifstream& inFile, unordered_map<string, Student>&
         password = i["password"];
         firstName = i["firstName"];
         lastName = i["lastName"];
+        fullName = i["fullName"];
+        mobile = i["mobile"];
         address = i["address"];
         age = i["age"];
         isDomestic = i["isDomestic"];
         for (const auto& course : i["courses"]) {
             courses.push_back(course);
         }
-        students[email] = Student(email, password, firstName, lastName, address, age, isDomestic, courses);
+        students[email] = Student(email, password, firstName, lastName, fullName, mobile, address, age, isDomestic, courses);
     }
 }
 
@@ -156,7 +159,7 @@ void Admin::loadFromFileJSON(ifstream& inFile, unordered_map<string, Admin>& adm
 vector<string> selectCourses(); // Forward declaration
 
 void studentSignUpJSON() {
-    string email, password, firstName, lastName, address;
+    string email, password, firstName, lastName, mobile, fullName, address;
     int age;
     bool isDomestic;
     vector<string> selectedCourses; // vector to hold the selected courses by the student (sami)
@@ -169,9 +172,14 @@ void studentSignUpJSON() {
     cin >> firstName;
     cout << "Last Name: ";
     cin >> lastName;
-    cout << "Age: ";
 
+    fullName = firstName + " " + lastName;
+
+    cout << "Age: ";
     age = validation.inputAgeValidation();
+
+    cout << "Mobile Number: ";
+    cin >> mobile;
     address = validation.inputAddress();
 
     cout << "Is Domestic (1 for Yes, 0 for No): ";
@@ -179,7 +187,7 @@ void studentSignUpJSON() {
 
     selectedCourses = selectCourses();
 
-    Student newStudent(email, password, firstName, lastName, address, age, isDomestic, selectedCourses); //created a new student with the selected courses 
+    Student newStudent(email, password, firstName, lastName, fullName, mobile, address, age, isDomestic, selectedCourses); //created a new student with the selected courses 
     students[email] = newStudent;
 
     ifstream inputFile("studentnew.json");
@@ -195,6 +203,8 @@ void studentSignUpJSON() {
         {"password", password},
         {"firstName", firstName},
         {"lastName", lastName},
+        {"fullName", fullName},
+        {"mobile", mobile},
         {"address", address},
         {"age", age},
         {"isDomestic", isDomestic},

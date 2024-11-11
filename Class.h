@@ -27,6 +27,8 @@ class Student : public User {
 private:
     std::string firstName;
     std::string lastName;
+    std::string fullName;
+    std::string mobile;
     std::string course;
     std::string address;
     int age;
@@ -35,8 +37,8 @@ private:
 
 public:
     Student() = default;
-    Student(std::string email, std::string password, std::string firstName, std::string lastName, std::string address, int age, bool isDomestic , std::vector<std::string> courses)
-        : User(email, password), firstName(firstName), lastName(lastName), address(address), age(age), isDomestic(isDomestic) , courses(courses) {}
+    Student(std::string email, std::string password, std::string firstName, std::string lastName, std::string fullName, std::string mobile, std::string address, int age, bool isDomestic , std::vector<std::string> courses)
+        : User(email, password), firstName(firstName), lastName(lastName), fullName(fullName), mobile(mobile), address(address), age(age), isDomestic(isDomestic) , courses(courses) {}
 
     bool getIsDomestic() const;
 

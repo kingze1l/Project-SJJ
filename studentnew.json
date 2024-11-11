@@ -5,7 +5,9 @@
         "course": "Software Engineer",
         "email": "jasonw@gmail.com",
         "firstName": "Jason",
+        "fullName": "Jason William",
         "isDomestic": false,
+        "mobile": "0223456709",
         "lastName": "William",
         "password": "Jasw8@lala12"
     },
@@ -15,160 +17,10 @@
         "course": "Civil",
         "email": "abun123@gmail.com",
         "firstName": "Asen",
+        "fullName": "Asen Bun",
         "isDomestic": false,
+        "mobile": "0226784353",
         "lastName": "Bun",
         "password": "Abun@lika12@"
-    },
-    {
-        "address": "Lala Avenue",
-        "age": 18,
-        "course": "18",
-        "email": "lalala@gmail.com",
-        "firstName": "Lala",
-        "isDomestic": false,
-        "lastName": "Land",
-        "password": "lalaLALA12@"
-    },
-    {
-        "address": "Tak",
-        "age": 20,
-        "course": "Tak",
-        "email": "nananana@gmail.com",
-        "firstName": "Nana",
-        "isDomestic": false,
-        "lastName": "Ana",
-        "password": "Nanan@123"
-    },
-    {
-        "address": "adasdds",
-        "age": 12,
-        "course": "adasdds",
-        "email": "nana@gmail.com",
-        "firstName": "Nna",
-        "isDomestic": false,
-        "lastName": "nan",
-        "password": "Nanan123@"
-    },
-    {
-        "address": "SOFTWARE",
-        "age": 18,
-        "course": "SOFTWARE",
-        "email": "joan@gmail.com",
-        "firstName": "Joan",
-        "isDomestic": false,
-        "lastName": "Allysen",
-        "password": "Password1231"
-    },
-    {
-        "address": "fed",
-        "age": 12,
-        "course": "fed",
-        "email": "newemail@gmail.com",
-        "firstName": "joan",
-        "isDomestic": false,
-        "lastName": "aksja",
-        "password": "JoanJoan123!"
-    },
-    {
-        "address": "askdhaj askdsjka",
-        "age": 13,
-        "course": "askdhaj askdsjka",
-        "email": "jj@gmail.com",
-        "firstName": "Joan",
-        "isDomestic": true,
-        "lastName": "Allysn",
-        "password": "Password123#"
-    },
-    {
-        "address": "asjda sakdja",
-        "age": 18,
-        "course": "asjda sakdja",
-        "email": "jaosdna@gmail.com",
-        "firstName": "joan",
-        "isDomestic": true,
-        "lastName": "allse",
-        "password": "askdaksdajksjdakjd2637166^^^JJ"
-    },
-    {
-        "address": "asjdajkl",
-        "age": 823,
-        "course": "asjdajkl",
-        "email": "j@gmail.com",
-        "firstName": "a",
-        "isDomestic": true,
-        "lastName": "a",
-        "password": "kaskld293483287HJIHJH&&"
-    },
-    {
-        "address": "sada",
-        "age": 18,
-        "course": "sada",
-        "email": "ja@gmail.com",
-        "firstName": "joan",
-        "isDomestic": true,
-        "lastName": "all",
-        "password": "ajdklas2348GH&&"
-    },
-    {
-        "address": "aksdasdja",
-        "age": 123,
-        "course": "aksdasdja",
-        "email": "asd@gmai.com",
-        "firstName": "ja",
-        "isDomestic": true,
-        "lastName": "a",
-        "password": "askljd30948KJSHDFJK&*^&*"
-    },
-    {
-        "address": "BSE",
-        "age": 24,
-        "course": "BSE",
-        "email": "Santosh@123gmail.com",
-        "firstName": "santosh",
-        "isDomestic": true,
-        "lastName": "adhikari",
-        "password": "Santosh@123"
-    },
-    {
-        "address": "as",
-        "age": 18,
-        "course": "as",
-        "email": "joanallysen@gmail.com",
-        "firstName": "joan",
-        "isDomestic": true,
-        "lastName": "akllyusen",
-        "password": "asdasdasdasd2013187JHSJKDHFJKAHHJ^^^^"
-    },
-    {
-        "address": "Jonsf",
-        "age": 18,
-        "course": "Jonsf",
-        "email": "jon@gmail.com",
-        "firstName": "joan",
-        "isDomestic": true,
-        "lastName": "a'",
-        "password": "asda123JHSJKDFHJ^^^"
-    },
-    {
-        "address": "a",
-        "age": 18,
-        "course": "a",
-        "email": "a@a.com",
-        "firstName": "a",
-        "isDomestic": true,
-        "lastName": "a",
-        "password": "123!qweQWE"
-    },
-    {
-        "address": "trevola street new windsor ",
-        "age": 18,
-        "courses": [
-            "Bachelor of Software Engineering"
-        ],
-        "email": "sami@11.com",
-        "firstName": "sami",
-        "isDomestic": false,
-        "lastName": "jan",
-        "password": "Sami@123"
     }
 ]
