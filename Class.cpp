@@ -37,9 +37,10 @@ void Student::showDetails() const {
     cout << "Student's Address: " << address << endl;
     cout << "Email: " << email << endl;
     cout << "Status: " << (isDomestic ? "Domestic" : "International") << endl;
-    cout << "Courses: ";
+    cout << "Courses: \n";
+    int i=1;
     for (const auto& course : students[email].getCourses()) {
-        cout << course << endl;  // Each course will be printed on a new line
+        cout << i++ << course << endl;  // Each course will be printed on a new line
     }
     cout << endl;
 }
@@ -84,6 +85,8 @@ void Student::loadFromFileJSON(ifstream& inFile, unordered_map<string, Student>&
         address = i["address"];
         age = i["age"];
         isDomestic = i["isDomestic"];
+
+        courses = {};
         for (const auto& course : i["courses"]) {
             courses.push_back(course);
         }

@@ -26,5 +26,19 @@
         "isDomestic": false,
         "lastName": "asasa",
         "password": "Sami@123"
+    },
+    {
+        "address": "whitaker",
+        "age": 20,
+        "courses": [
+            "Certificate in Creative Money Laundrer",
+            "Diploma in Digital Design - Web and Graphic Design",
+            "Bachelor of Yapping"
+        ],
+        "email": "j@g.com",
+        "firstName": "j",
+        "isDomestic": false,
+        "lastName": "a",
+        "password": "qweQWE123!"
     }
 ]
