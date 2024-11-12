@@ -14,31 +14,17 @@
         "password": "asojdaj21673167###A"
     },
     {
-        "address": "gfhjkljhgf",
-        "age": 340,
-        "courses": [
-            "Certificate in Creative Media",
-            "Something we used to know",
-            "Bachelor of Software Engineering"
-        ],
-        "email": "a@3.com",
-        "firstName": "ssssa",
-        "isDomestic": false,
-        "lastName": "asasa",
-        "password": "Sami@123"
-    },
-    {
         "address": "whitaker",
         "age": 20,
         "courses": [
-            "Certificate in Creative Money Laundrer",
-            "Diploma in Digital Design - Web and Graphic Design",
-            "Bachelor of Yapping"
+            "Diploma in Film and Content Creation",
+            "Bachelor of Software Engineering",
+            "Diploma in Creative Digital Design"
         ],
-        "email": "j@g.com",
+        "email": "a",
         "firstName": "j",
         "isDomestic": false,
         "lastName": "a",
-        "password": "qweQWE123!"
+        "password": "a"
     }
 ]

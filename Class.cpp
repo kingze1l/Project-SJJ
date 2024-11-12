@@ -26,7 +26,6 @@ string User::getEmail() const {
 }
 
 // STUDENT
-
 bool Student::getIsDomestic() const {
     return isDomestic;
 }
@@ -45,13 +44,8 @@ void Student::showDetails() const {
     cout << endl;
 }
 
-void Student::addCourse(const string& course) {
-    if (courses.size() < 3) {
-        courses.push_back(course);
-    }
-    else {
-        cout << "You can only select a maximum of three courses." << endl;
-    }
+void Student::renewCourse(const vector<string>& selectedCourses) {
+    courses = selectedCourses;
 }
 
 void Student::removeCourse(const string& course) {  // funcvtion for student to remove courses 
@@ -133,9 +127,11 @@ void Admin::viewAllStudentsEmail(const std::unordered_map<std::string, Student>&
     cout << "-----------------" << endl;
 }
 
+void removeStudentJson(const string& email);
 void Admin::removeStudent(unordered_map<string, Student>& students, string studentEmail) const {
     if (students.find(studentEmail) != students.end()) {
         students.erase(studentEmail);
+        removeStudentJson(studentEmail);
         cout << "Student with email " << studentEmail << " has been removed." << endl;
     }
     else {
@@ -156,8 +152,57 @@ void Admin::loadFromFileJSON(ifstream& inFile, unordered_map<string, Admin>& adm
     }
 }
 
-vector<string> selectCourses(); // Forward declaration
+vector<string> selectCourses(const vector<string>& studentCourses = {}); // Forward declaration
 
+void updateStudentCourseJson(string email, const vector<string>& newCourses) {
+    ifstream inFile("studentnew.json");
+
+    if (!(inFile.is_open())) {
+        cout << "ERROR: CAN'T OPEN STUDENT JSON addStudentCourseJson()" << endl;
+        return;
+    }
+
+    json jsonArray;
+    inFile >> jsonArray;
+    for (auto& i : jsonArray) {
+        if (i["email"] == email) {
+            i["courses"] = newCourses;
+            break;
+        }
+    }
+
+    ofstream outFile("studentnew.json");
+    if (!(outFile.is_open())) {
+        cout << "ERROR: CAN'T OPEN STUDENT JSON updateStudentCourseJson()" << endl;
+        return;
+    }
+    outFile << jsonArray.dump(4);
+}
+
+void removeStudentJson(const string& email) {
+    ifstream inFile("studentnew.json");
+    if (!inFile.is_open()) {
+        cout << "ERROR: CAN'T OPEN STUDENT JSON addStudentCourseJson()" << endl;
+        return;
+    }
+    json jsonArray;
+
+    inFile >> jsonArray;
+    for (auto it = jsonArray.begin(); it != jsonArray.end();) {
+        if ((*it)["email"] == email) {
+            it = jsonArray.erase(it);
+        } else{ 
+            it++;
+        }
+    }
+
+    ofstream outFile("studentnew.json");
+    if (!(outFile.is_open())) {
+        cout << "ERROR: CAN'T OPEN STUDENT JSON updateStudentCourseJson()" << endl;
+        return;
+    }
+    outFile << jsonArray.dump(4);
+}
 void studentSignUpJSON() {
     string email, password, firstName, lastName, address;
     int age;
@@ -261,12 +306,20 @@ void studentLogin(const string& email) {
             _getch();
             break;
         case 3: {
-            vector<string> newCourses = selectCourses();
-            for (const string& course : newCourses) {
-                students[email].addCourse(course);
+            if (students[email].getCourses().size() >= 3) {
+                cout << "You already have 3 course, please remove a course to add other course";
+                cout << "\nPress any key to return to student menu...";
+                _getch();
+                break;
             }
+
+            vector<string> newCourses = selectCourses(students[email].getCourses());
+            students[email].renewCourse(newCourses);
+            updateStudentCourseJson(students[email].getEmail(), newCourses);
+            
             cout << "Courses added successfully!" << endl;
-            Sleep(1000);
+            cout << "\nPress any key to return to student menu...";
+            _getch();
             break;
         }
         case 4: {
@@ -283,6 +336,7 @@ void studentLogin(const string& email) {
             if (courseChoice > 0 && courseChoice <= courses.size()) {
                 string courseToRemove = courses[courseChoice - 1];
                 students[email].removeCourse(courseToRemove);
+                updateStudentCourseJson(students[email].getEmail(), students[email].getCourses());
                 cout << "Course \"" << courseToRemove << "\" removed successfully!" << endl;
             }
             else if (courseChoice == 0) {
@@ -291,7 +345,8 @@ void studentLogin(const string& email) {
             else {
                 cout << "Invalid selection." << endl;
             }
-            Sleep(1000);
+            cout << "\nPress any key to return to student menu...";
+            _getch();
             break;
         }
         case 5:
@@ -365,7 +420,7 @@ void adminLogin(string& email) {
 }
 
 // function to allow the student to select courses
-vector<string> selectCourses() {
+vector<string> selectCourses(const vector<string> &studentCourses) {
     Validation v;
     vector<string> availableCourses = { 
         "Certificate in Creative Media", 
@@ -375,20 +430,32 @@ vector<string> selectCourses() {
         "Diploma in Software Development", 
         "Diploma in Film and Content Creation" 
     };
-    vector<string> selectedCourses{};
+
+    vector<string> selectedCourses = studentCourses;
     int courseChoice{};
 
-    cout << "Select your first course (1-6): \n";
+    if (!selectedCourses.empty()) {
+        cout << "Your current course: " << endl;
+        for (int i = 0; i < selectedCourses.size(); i++){
+            cout << i + 1 << ". " << selectedCourses[i] << endl;
+        }
+    }
+    cout << endl;
+
+    cout << "Select a course (1-6): \n";
     for (int i = 0; i < availableCourses.size(); ++i) {
         cout << (i + 1) << ". " << availableCourses[i] << endl;
     }
 
-    courseChoice = v.inputNumber(availableCourses.size());
-    selectedCourses.push_back(availableCourses[courseChoice - 1]);
-
-    // Allow student to choose up to two more courses
+    int take = 0;
     while (selectedCourses.size() < 3) {
-        cout << "Select another course (or enter 0 to stop selecting): ";
+        if (take > 0) {
+            cout << "Select another course (or enter 0 to stop selecting): ";
+        }
+        else {
+            cout << "Please select a course: ";
+        }
+        
         courseChoice = v.inputNumber(availableCourses.size());
 
         if (courseChoice == 0) {
@@ -399,7 +466,7 @@ vector<string> selectCourses() {
             cout << "You have already selected this course!" << endl;
             continue;
         }
-            
+        take++;
         selectedCourses.push_back(availableCourses[courseChoice - 1]);
     }
     return selectedCourses;
