@@ -39,7 +39,7 @@ void Student::showDetails() const {
     cout << "Courses: \n";
     int i=1;
     for (const auto& course : students[email].getCourses()) {
-        cout << i++ << course << endl;  // Each course will be printed on a new line
+        cout << i++ <<"-" << course << endl;  // Each course will be printed on a new line
     }
     cout << endl;
 }
@@ -280,34 +280,42 @@ void studentLogin(const string& email) {
     while (keepStudentLoggedIn) {
         system("cls");
         displayLogo();
-        setColor(10);
+        setColor(9);
         cout << "\n-- Student Menu --\n";
-        setColor(13); // Purple color for options
+        setColor(10); // Purple color for options
         cout << "1. View My Details\n";
         cout << "2. View My Courses\n";
         cout << "3. Add More Courses\n";
         cout << "4. Remove Course\n";  // New option for removing courses
         cout << "5. Log Out\n";        // Adjusted menu
+        setColor(15);
         cout << "Choose an option: ";
         cin >> studentChoice;
 
         switch (studentChoice) {
         case 1:
+            setColor(15);  // White for details
             students[email].showDetails();
             cout << "\nPress any key to return to student menu...";
             _getch();
             break;
+
         case 2:
-            cout << "\nYour Courses: " << endl;
+            setColor(15);  // White for course list
+            cout << "\nYour Courses: \n";
+            setColor(10);  // Light Green for course names
             for (const string& course : students[email].getCourses()) {
                 cout << "- " << course << endl;
             }
             cout << "\nPress any key to return to student menu...";
             _getch();
             break;
+
         case 3: {
+            setColor(14);  // Light Yellow for info
             if (students[email].getCourses().size() >= 3) {
-                cout << "You already have 3 course, please remove a course to add other course";
+                setColor(12);  // Red for error message
+                cout << "You already have 3 courses. Please remove a course to add another.\n";
                 cout << "\nPress any key to return to student menu...";
                 _getch();
                 break;
@@ -316,20 +324,23 @@ void studentLogin(const string& email) {
             vector<string> newCourses = selectCourses(students[email].getCourses());
             students[email].renewCourse(newCourses);
             updateStudentCourseJson(students[email].getEmail(), newCourses);
-            
+
+            setColor(10);  // Light Green for success message
             cout << "Courses added successfully!" << endl;
             cout << "\nPress any key to return to student menu...";
             _getch();
             break;
         }
+
         case 4: {
-            // Allow removing a course
+            setColor(15);  // White for course removal
             cout << "Select a course to remove:\n";
             const auto& courses = students[email].getCourses();
             for (size_t i = 0; i < courses.size(); ++i) {
                 cout << (i + 1) << ". " << courses[i] << endl;
             }
             cout << "Enter the number of the course to remove (or 0 to cancel): ";
+
             int courseChoice;
             cin >> courseChoice;
 
@@ -337,24 +348,32 @@ void studentLogin(const string& email) {
                 string courseToRemove = courses[courseChoice - 1];
                 students[email].removeCourse(courseToRemove);
                 updateStudentCourseJson(students[email].getEmail(), students[email].getCourses());
+
+                setColor(10);  // Light Green for success message
                 cout << "Course \"" << courseToRemove << "\" removed successfully!" << endl;
             }
             else if (courseChoice == 0) {
+                setColor(15);  // White for no action
                 cout << "No course removed." << endl;
             }
             else {
+                setColor(12);  // Red for invalid selection
                 cout << "Invalid selection." << endl;
             }
             cout << "\nPress any key to return to student menu...";
             _getch();
             break;
         }
+
         case 5:
-            cout << "Logging out...";
+            setColor(15);  // White for logout info
+            cout << "Logging out...\n";
             keepStudentLoggedIn = false;
             break;
+
         default:
-            cout << "Invalid option. Please try again." << endl;
+            setColor(12);  // Red for invalid input
+            cout << "Invalid option. Please try again.\n";
             Sleep(1000);
         }
     }
