@@ -29,13 +29,14 @@ private:
     std::string lastName;
     std::string course;
     std::string address;
+    std::string mobile;
     int age;
     bool isDomestic;
     std::vector<std::string> courses;
 
 public:
     Student() = default;
-    Student(std::string email, std::string password, std::string firstName, std::string lastName, std::string address, int age, bool isDomestic , std::vector<std::string> courses)
+    Student(std::string email, std::string password, std::string firstName, std::string lastName, std::string address, std::string mobile, int age, bool isDomestic , std::vector<std::string> courses)
         : User(email, password), firstName(firstName), lastName(lastName), address(address), age(age), isDomestic(isDomestic) , courses(courses) {}
 
     bool getIsDomestic() const;

@@ -64,7 +64,7 @@ vector<string> Student::getCourses() const {
 }
 
 void Student::loadFromFileJSON(ifstream& inFile, unordered_map<string, Student>& students) {
-    string email, password, firstName, lastName, address;
+    string email, password, firstName, lastName, address,mobile;
     int age;
     bool isDomestic;
     vector<string> courses; // array to hold courses for the student 
@@ -77,6 +77,7 @@ void Student::loadFromFileJSON(ifstream& inFile, unordered_map<string, Student>&
         firstName = i["firstName"];
         lastName = i["lastName"];
         address = i["address"];
+        mobile = i["mobile"];
         age = i["age"];
         isDomestic = i["isDomestic"];
 
@@ -84,7 +85,7 @@ void Student::loadFromFileJSON(ifstream& inFile, unordered_map<string, Student>&
         for (const auto& course : i["courses"]) {
             courses.push_back(course);
         }
-        students[email] = Student(email, password, firstName, lastName, address, age, isDomestic, courses);
+        students[email] = Student(email, password, firstName, lastName, address, mobile, age, isDomestic, courses);
     }
 }
 
@@ -204,7 +205,7 @@ void removeStudentJson(const string& email) {
     outFile << jsonArray.dump(4);
 }
 void studentSignUpJSON() {
-    string email, password, firstName, lastName, address;
+    string email, password, firstName, lastName, address,mobile;
     int age;
     bool isDomestic;
     vector<string> selectedCourses; // vector to hold the selected courses by the student (sami)
@@ -222,13 +223,14 @@ void studentSignUpJSON() {
 
     age = validation.inputAgeValidation();
     address = validation.inputAddress();
-
+    cout << "Mobile Number: ";
+    cin>>mobile;
     cout << "Is Domestic (1 for Yes, 0 for No): ";
     cin >> isDomestic;
 
     selectedCourses = selectCourses();
 
-    Student newStudent(email, password, firstName, lastName, address, age, isDomestic, selectedCourses); //created a new student with the selected courses 
+    Student newStudent(email, password, firstName, lastName, address, mobile, age, isDomestic, selectedCourses); //created a new student with the selected courses 
     students[email] = newStudent;
 
     ifstream inputFile("studentnew.json");
@@ -249,6 +251,7 @@ void studentSignUpJSON() {
         {"firstName", firstName},
         {"lastName", lastName},
         {"address", address},
+        {"mobile", mobile},
         {"age", age},
         {"isDomestic", isDomestic},
         {"courses", selectedCourses} // saves the courses as an array in json even though it's a vector (sami)
