@@ -1,26 +1,30 @@
 [
     {
-        "address": "Porters Avenue",
-        "age": 18,
-        "course": "Software Engineer",
-        "email": "jasonw@gmail.com",
-        "firstName": "Jason",
-        "fullName": "Jason William",
+        "address": "a",
+        "age": 20,
+        "courses": [
+            "Certificate in Creative Media",
+            "Diploma in Digital Design - Web and Graphic Design",
+            "Bachelor of Software Engineering"
+        ],
+        "email": "a@ab.com",
+        "firstName": "j",
         "isDomestic": false,
-        "mobile": "0223456709",
-        "lastName": "William",
-        "password": "Jasw8@lala12"
+        "lastName": "a",
+        "password": "asojdaj21673167###A"
     },
     {
-        "address": "Porters Avenue",
-        "age": 18,
-        "course": "Civil",
-        "email": "abun123@gmail.com",
-        "firstName": "Asen",
-        "fullName": "Asen Bun",
+        "address": "whitaker",
+        "age": 20,
+        "courses": [
+            "Diploma in Film and Content Creation",
+            "Bachelor of Software Engineering",
+            "Diploma in Software Development"
+        ],
+        "email": "a",
+        "firstName": "j",
         "isDomestic": false,
-        "mobile": "0226784353",
-        "lastName": "Bun",
-        "password": "Abun@lika12@"
+        "lastName": "a",
+        "password": "a"
     }
 ]

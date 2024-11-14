@@ -46,7 +46,7 @@ public:
 
     std::vector<std::string> getCourses() const; // this is a getter for courses. (sami)
     void removeCourse(const std::string& course); // added so we student can remove courses
-    void addCourse(const std::string& course); // function to add a course 
+    void renewCourse(const std::vector<std::string>& course); // function to add a course 
 
     // Load student details from a file
     static void loadFromFileJSON(std::ifstream& inFile, std::unordered_map<std::string, Student>& students);
