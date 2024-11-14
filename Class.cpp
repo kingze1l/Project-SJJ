@@ -26,7 +26,6 @@ string User::getEmail() const {
 }
 
 // STUDENT
-
 bool Student::getIsDomestic() const {
     return isDomestic;
 }
@@ -37,20 +36,16 @@ void Student::showDetails() const {
     cout << "Student's Address: " << address << endl;
     cout << "Email: " << email << endl;
     cout << "Status: " << (isDomestic ? "Domestic" : "International") << endl;
-    cout << "Courses: ";
+    cout << "Courses: \n";
+    int i=1;
     for (const auto& course : students[email].getCourses()) {
-        cout << course << endl;  // Each course will be printed on a new line
+        cout << i++ <<"-" << course << endl;  // Each course will be printed on a new line
     }
     cout << endl;
 }
 
-void Student::addCourse(const string& course) {
-    if (courses.size() < 3) {
-        courses.push_back(course);
-    }
-    else {
-        cout << "You can only select a maximum of three courses." << endl;
-    }
+void Student::renewCourse(const vector<string>& selectedCourses) {
+    courses = selectedCourses;
 }
 
 void Student::removeCourse(const string& course) {  // funcvtion for student to remove courses 
@@ -74,8 +69,8 @@ void Student::loadFromFileJSON(ifstream& inFile, unordered_map<string, Student>&
     bool isDomestic;
     vector<string> courses; // array to hold courses for the student 
     json inFiledata;
-    inFile >> inFiledata;
 
+    inFile >> inFiledata;
     for (auto& i : inFiledata) {
         email = i["email"];
         password = i["password"];
@@ -84,6 +79,8 @@ void Student::loadFromFileJSON(ifstream& inFile, unordered_map<string, Student>&
         address = i["address"];
         age = i["age"];
         isDomestic = i["isDomestic"];
+
+        courses = {};
         for (const auto& course : i["courses"]) {
             courses.push_back(course);
         }
@@ -130,9 +127,11 @@ void Admin::viewAllStudentsEmail(const std::unordered_map<std::string, Student>&
     cout << "-----------------" << endl;
 }
 
+void removeStudentJson(const string& email);
 void Admin::removeStudent(unordered_map<string, Student>& students, string studentEmail) const {
     if (students.find(studentEmail) != students.end()) {
         students.erase(studentEmail);
+        removeStudentJson(studentEmail);
         cout << "Student with email " << studentEmail << " has been removed." << endl;
     }
     else {
@@ -153,14 +152,64 @@ void Admin::loadFromFileJSON(ifstream& inFile, unordered_map<string, Admin>& adm
     }
 }
 
-vector<string> selectCourses(); // Forward declaration
+vector<string> selectCourses(const vector<string>& studentCourses = {}); // Forward declaration
 
+void updateStudentCourseJson(string email, const vector<string>& newCourses) {
+    ifstream inFile("studentnew.json");
+
+    if (!(inFile.is_open())) {
+        cout << "ERROR: CAN'T OPEN STUDENT JSON addStudentCourseJson()" << endl;
+        return;
+    }
+
+    json jsonArray;
+    inFile >> jsonArray;
+    for (auto& i : jsonArray) {
+        if (i["email"] == email) {
+            i["courses"] = newCourses;
+            break;
+        }
+    }
+
+    ofstream outFile("studentnew.json");
+    if (!(outFile.is_open())) {
+        cout << "ERROR: CAN'T OPEN STUDENT JSON updateStudentCourseJson()" << endl;
+        return;
+    }
+    outFile << jsonArray.dump(4);
+}
+
+void removeStudentJson(const string& email) {
+    ifstream inFile("studentnew.json");
+    if (!inFile.is_open()) {
+        cout << "ERROR: CAN'T OPEN STUDENT JSON addStudentCourseJson()" << endl;
+        return;
+    }
+    json jsonArray;
+
+    inFile >> jsonArray;
+    for (auto it = jsonArray.begin(); it != jsonArray.end();) {
+        if ((*it)["email"] == email) {
+            it = jsonArray.erase(it);
+        } else{ 
+            it++;
+        }
+    }
+
+    ofstream outFile("studentnew.json");
+    if (!(outFile.is_open())) {
+        cout << "ERROR: CAN'T OPEN STUDENT JSON updateStudentCourseJson()" << endl;
+        return;
+    }
+    outFile << jsonArray.dump(4);
+}
 void studentSignUpJSON() {
     string email, password, firstName, lastName, address;
     int age;
     bool isDomestic;
     vector<string> selectedCourses; // vector to hold the selected courses by the student (sami)
     Validation validation;
+
     cout << "Enter student details for sign-up:" << endl;
     email = validation.inputEmailValidation();
     password = validation.inputPasswordValidation();
@@ -183,9 +232,13 @@ void studentSignUpJSON() {
     students[email] = newStudent;
 
     ifstream inputFile("studentnew.json");
-    json existingdata;
+    if (!(inputFile.is_open())) {
+        cout << "ERROR: STUDENT JSON CAN'T BE OPENED";
+        return;
+    }
 
-    if (inputFile.is_open()) {
+    json existingdata{};
+    if (!(inputFile.peek() == ifstream::traits_type::eof())) {
         inputFile >> existingdata;
         inputFile.close();
     }
@@ -204,14 +257,16 @@ void studentSignUpJSON() {
     existingdata.push_back(studentdata);
 
     ofstream outFile("studentnew.json");
-    if (outFile.is_open()) {
-        outFile << existingdata.dump(4);
-        outFile.close();
-        cout << "Student registered and saved successfully!" << endl;
+   
+    if (!outFile.is_open()) {
+        cout << "ERROR: CAN'T OPEN STUDENT JSON FILE, studentSignInJson()";
+        Sleep(1000);
+        return;
     }
-    else {
-        cout << "Error saving student to file." << endl;
-    }
+
+    outFile << existingdata.dump(4);
+    outFile.close();
+    cout << "Student registered and saved successfully!" << endl;
 }
 
 void studentLogin(const string& email) {
@@ -225,71 +280,100 @@ void studentLogin(const string& email) {
     while (keepStudentLoggedIn) {
         system("cls");
         displayLogo();
-        setColor(10);
+        setColor(9);
         cout << "\n-- Student Menu --\n";
-        setColor(13); // Purple color for options
+        setColor(10); // Purple color for options
         cout << "1. View My Details\n";
         cout << "2. View My Courses\n";
         cout << "3. Add More Courses\n";
         cout << "4. Remove Course\n";  // New option for removing courses
         cout << "5. Log Out\n";        // Adjusted menu
+        setColor(15);
         cout << "Choose an option: ";
         cin >> studentChoice;
 
         switch (studentChoice) {
         case 1:
+            setColor(15);  // White for details
             students[email].showDetails();
             cout << "\nPress any key to return to student menu...";
             _getch();
             break;
+
         case 2:
-            cout << "\nYour Courses: " << endl;
+            setColor(15);  // White for course list
+            cout << "\nYour Courses: \n";
+            setColor(10);  // Light Green for course names
             for (const string& course : students[email].getCourses()) {
                 cout << "- " << course << endl;
             }
             cout << "\nPress any key to return to student menu...";
             _getch();
             break;
+
         case 3: {
-            vector<string> newCourses = selectCourses();
-            for (const string& course : newCourses) {
-                students[email].addCourse(course);
+            setColor(14);  // Light Yellow for info
+            if (students[email].getCourses().size() >= 3) {
+                setColor(12);  // Red for error message
+                cout << "You already have 3 courses. Please remove a course to add another.\n";
+                cout << "\nPress any key to return to student menu...";
+                _getch();
+                break;
             }
+
+            vector<string> newCourses = selectCourses(students[email].getCourses());
+            students[email].renewCourse(newCourses);
+            updateStudentCourseJson(students[email].getEmail(), newCourses);
+
+            setColor(10);  // Light Green for success message
             cout << "Courses added successfully!" << endl;
-            Sleep(1000);
+            cout << "\nPress any key to return to student menu...";
+            _getch();
             break;
         }
+
         case 4: {
-            // Allow removing a course
+            setColor(15);  // White for course removal
             cout << "Select a course to remove:\n";
             const auto& courses = students[email].getCourses();
             for (size_t i = 0; i < courses.size(); ++i) {
                 cout << (i + 1) << ". " << courses[i] << endl;
             }
             cout << "Enter the number of the course to remove (or 0 to cancel): ";
+
             int courseChoice;
             cin >> courseChoice;
 
             if (courseChoice > 0 && courseChoice <= courses.size()) {
                 string courseToRemove = courses[courseChoice - 1];
                 students[email].removeCourse(courseToRemove);
+                updateStudentCourseJson(students[email].getEmail(), students[email].getCourses());
+
+                setColor(10);  // Light Green for success message
                 cout << "Course \"" << courseToRemove << "\" removed successfully!" << endl;
             }
             else if (courseChoice == 0) {
+                setColor(15);  // White for no action
                 cout << "No course removed." << endl;
             }
             else {
+                setColor(12);  // Red for invalid selection
                 cout << "Invalid selection." << endl;
             }
-            Sleep(1000);
+            cout << "\nPress any key to return to student menu...";
+            _getch();
             break;
         }
+
         case 5:
-            cout << "Logging out...";
+            setColor(15);  // White for logout info
+            cout << "Logging out...\n";
             keepStudentLoggedIn = false;
             break;
+
         default:
-            cout << "Invalid option. Please try again." << endl;
+            setColor(12);  // Red for invalid input
+            cout << "Invalid option. Please try again.\n";
             Sleep(1000);
         }
     }
@@ -355,45 +439,54 @@ void adminLogin(string& email) {
 }
 
 // function to allow the student to select courses
-vector<string> selectCourses() {
-    vector<string> availableCourses = { "Certificate in Creative Media", "Diploma in Digital Design – Web and Graphic Design", "Bachelor of Software Engineering", "Diploma in Creative Digital Design", "Diploma in Software Development", "Diploma in Film and Content Creation" };
-    vector<string> selectedCourses;
-    int courseChoice;
+vector<string> selectCourses(const vector<string> &studentCourses) {
+    Validation v;
+    vector<string> availableCourses = { 
+        "Certificate in Creative Media", 
+        "Diploma in Digital Design - Web and Graphic Design", 
+        "Bachelor of Software Engineering", 
+        "Diploma in Creative Digital Design", 
+        "Diploma in Software Development", 
+        "Diploma in Film and Content Creation" 
+    };
 
-    cout << "Select your first course (1-6): ";
-    // Display available courses to the student
+    vector<string> selectedCourses = studentCourses;
+    int courseChoice{};
+
+    if (!selectedCourses.empty()) {
+        cout << "Your current course: " << endl;
+        for (int i = 0; i < selectedCourses.size(); i++){
+            cout << i + 1 << ". " << selectedCourses[i] << endl;
+        }
+    }
+    cout << endl;
+
+    cout << "Select a course (1-6): \n";
     for (int i = 0; i < availableCourses.size(); ++i) {
         cout << (i + 1) << ". " << availableCourses[i] << endl;
     }
 
-    cin >> courseChoice;
-    if (courseChoice < 1 || courseChoice > availableCourses.size()) {
-        cout << "Invalid course selection!" << endl;
-        return selectedCourses;  // Return empty vector if invalid    
-    }
-
-    // Adding the first selected course
-    selectedCourses.push_back(availableCourses[courseChoice - 1]);
-
-    // Allow student to choose up to two more courses
+    int take = 0;
     while (selectedCourses.size() < 3) {
-        cout << "Select another course (or enter 0 to stop selecting): ";
-        cin >> courseChoice;
-        if (courseChoice == 0) {
-            break;  // Stop selecting if user choice is 0        
-        }
-        if (courseChoice < 1 || courseChoice > availableCourses.size()) {
-            cout << "Invalid course selection!" << endl;
-            continue;
-        }
-
-        // making sure no duplicates are recorded
-        if (find(selectedCourses.begin(), selectedCourses.end(), availableCourses[courseChoice - 1]) != selectedCourses.end()) {
-            cout << "You have already selected this course!" << endl;
+        if (take > 0) {
+            cout << "Select another course (or enter 0 to stop selecting): ";
         }
         else {
-            selectedCourses.push_back(availableCourses[courseChoice - 1]);
+            cout << "Please select a course: ";
         }
+        
+        courseChoice = v.inputNumber(availableCourses.size());
+
+        if (courseChoice == 0) {
+            break;     
+        }
+   
+        if (find(selectedCourses.begin(), selectedCourses.end(), availableCourses[courseChoice - 1]) != selectedCourses.end()) {
+            cout << "You have already selected this course!" << endl;
+            continue;
+        }
+        take++;
+        selectedCourses.push_back(availableCourses[courseChoice - 1]);
     }
     return selectedCourses;
 }
@@ -434,10 +527,20 @@ void signInProcedure() {
 // Function to load students from a file
 void loadStudentsFromFile() {
     ifstream inFile("studentnew.json");
-    if (inFile.is_open()) {
-        Student::loadFromFileJSON(inFile, students);
-        inFile.close();
+    if (inFile.peek() == ifstream::traits_type::eof()) {
+        cout << "STUDENT JSON IS EMPTY";
+        Sleep(1000);
+        return;
     }
+
+    if (!(inFile.is_open()) ){
+        cout << "STUDENT JSON CAN'T BE OPENED";
+        Sleep(1000);
+        return;
+    }
+
+    Student::loadFromFileJSON(inFile, students);
+    inFile.close();
 }
 
 // Function to load admins from a file
