@@ -1,30 +1,18 @@
 [
     {
-        "address": "a",
+        "address": "2131 21",
         "age": 20,
         "courses": [
-            "Certificate in Creative Media",
             "Diploma in Digital Design - Web and Graphic Design",
-            "Bachelor of Software Engineering"
-        ],
-        "email": "a@ab.com",
-        "firstName": "j",
-        "isDomestic": false,
-        "lastName": "a",
-        "password": "asojdaj21673167###A"
-    },
-    {
-        "address": "whitaker",
-        "age": 20,
-        "courses": [
-            "Diploma in Film and Content Creation",
             "Bachelor of Software Engineering",
-            "Diploma in Software Development"
+            "Diploma in Creative Digital Design"
         ],
-        "email": "a",
-        "firstName": "j",
-        "isDomestic": false,
+        "email": "a@a.cpom",
+        "firstName": "a",
+        "fullName": "a a",
+        "isDomestic": true,
         "lastName": "a",
-        "password": "a"
+        "mobile": "2321",
+        "password": "QWEqwe123!"
     }
 ]
