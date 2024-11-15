@@ -40,7 +40,7 @@ void displayMenu() {
     setColor(11); // Cyan
     cout << "\n                           2. ";
     setColor(14); // Yellow
-    cout << "Sign In";
+    cout << "Log In";
     setColor(11); // Cyan
     cout << "\n                           3. ";
     setColor(12); // Red

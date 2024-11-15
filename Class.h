@@ -76,18 +76,21 @@ public:
 extern std::unordered_map<std::string, Student> students;
 extern std::unordered_map<std::string, Admin> admins;
 
-// Function to sign up a student and save details to a file
+// JSON related function to update, remove, and add user data to JSON
 void studentSignUpJSON();
+void updateStudentCourseJson(std::string email, const std::vector<std::string>& newCourses);
+void removeStudentJson(const std::string& email);
 
-void studentLogin(const std::string &email);
-void adminLogin(const std::string &email);
-void signInProcedure();
+// Simple display of user menu and functionality 
+void studentMenu(const std::string &email);
+void adminMenu(const std::string &email);
 
-// Function to load students from a file
+// The login procedure for user
+void loginProcedure();
+
+// Save data from JSON to system class
 void loadStudentsFromFile();
-
-// Function to load admins from a file
 void loadAdminsFromFile();
 
-// Sign-in function
-bool signIn(const std::string& email, const std::string& password);
+// User login
+bool login(const std::string& email, const std::string& password);

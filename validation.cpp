@@ -47,11 +47,17 @@ string Validation::inputPassword() {
     return password;
 }
 
+
 string Validation::inputEmailValidation() {
     string email;
     while (true) {
         cout << "Email: ";
         cin >> email;
+
+        if (email == "0") {
+            return "";
+        }
+
         if (!isValidEmail(email)) {
             cout << "Invalid email format. Please try again." << endl;
             continue;
@@ -61,7 +67,7 @@ string Validation::inputEmailValidation() {
             break;  // If email is unique, break the loop
         }
         else {
-            cout << "Email already exists. Please enter a new, different email." << endl;
+            cout << "Email already exists. Please enter a new different email. Or enter 0 to go back to menu" << endl;
         }
     }
     return email;

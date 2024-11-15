@@ -14,5 +14,112 @@
         "lastName": "a",
         "mobile": "2321",
         "password": "QWEqwe123!"
+    },
+    {
+        "address": "hitaker place grafton aucklan 1010",
+        "age": 20,
+        "courses": [
+            "Bachelor of Software Engineering",
+            "Diploma in Creative Digital Design"
+        ],
+        "email": "a",
+        "firstName": "joan",
+        "fullName": "joan a",
+        "isDomestic": false,
+        "lastName": "a",
+        "mobile": "1213 213 213",
+        "password": "a!"
+    },
+    {
+        "address": "hiakt ",
+        "age": 20,
+        "courses": [
+            "Diploma in Creative Digital Design",
+            "Diploma in Software Development",
+            "Certificate in Creative Media"
+        ],
+        "email": "aaa@g.com",
+        "firstName": "j",
+        "fullName": "j a",
+        "isDomestic": false,
+        "lastName": "a",
+        "mobile": "123 213 231",
+        "password": "QWEqwe!@#123"
+    },
+    {
+        "address": "121212dddawdadw",
+        "age": 18,
+        "courses": [
+            "Diploma in Film and Content Creation",
+            "Diploma in Software Development",
+            "Bachelor of Software Engineering"
+        ],
+        "email": "dasddasd@sadddassa.dsaddasd",
+        "firstName": "asdsasddd",
+        "fullName": "asdsasddd dadwd",
+        "isDomestic": true,
+        "lastName": "dadwd",
+        "mobile": "sdfsdfsfsdfs",
+        "password": "Jwweeeeeee@#@#@#@#@#@1332323232232{{:!"
+    },
+    {
+        "address": "eq",
+        "age": 20,
+        "courses": [
+            "Diploma in Digital Design - Web and Graphic Design",
+            "Bachelor of Software Engineering",
+            "Diploma in Creative Digital Design"
+        ],
+        "email": "a@aaaa.com",
+        "firstName": "j",
+        "fullName": "j a",
+        "isDomestic": false,
+        "lastName": "a",
+        "mobile": "s",
+        "password": "QWEqwe123!"
+    },
+    {
+        "address": "23 2131 213",
+        "age": 20,
+        "courses": [
+            "Diploma in Digital Design - Web and Graphic Design"
+        ],
+        "email": "j@a.com",
+        "firstName": "j",
+        "fullName": "j a",
+        "isDomestic": false,
+        "lastName": "a",
+        "mobile": "aa",
+        "password": "QWWEqwe123!"
+    },
+    {
+        "address": "hiraker",
+        "age": 20,
+        "courses": [
+            "Diploma in Digital Design - Web and Graphic Design"
+        ],
+        "email": "a@jj.com",
+        "firstName": "J",
+        "fullName": "J A",
+        "isDomestic": false,
+        "lastName": "A",
+        "mobile": "here does this go",
+        "password": "QWEqwe123!"
+    },
+    {
+        "address": "aa aaa aa",
+        "age": 20,
+        "courses": [
+            "Diploma in Digital Design - Web and Graphic Design",
+            "Bachelor of Software Engineering",
+            "Diploma in Creative Digital Design"
+        ],
+        "email": "a@jas.com",
+        "firstName": "j",
+        "fullName": "j a",
+        "isDomestic": false,
+        "lastName": "a",
+        "mobile": "221 213 1231",
+        "password": "QWEqwe123!"
     }
 ]
