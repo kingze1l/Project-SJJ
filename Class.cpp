@@ -40,7 +40,7 @@ void Student::showDetails() const {
     cout << "Courses: \n";
     int i=1;
     for (const auto& course : students[email].getCourses()) {
-        cout << i++ <<"-" << course << endl;  // Each course will be printed on a new line
+        cout << i++ <<". " << course << endl;  // Each course will be printed on a new line
     }
     cout << endl;
 }
@@ -206,6 +206,7 @@ void removeStudentJson(const string& email) {
     }
     outFile << jsonArray.dump(4);
 }
+
 void studentSignUpJSON() {
     string email, password, firstName, lastName, mobile, fullName, address;
     int age;
@@ -215,24 +216,30 @@ void studentSignUpJSON() {
 
     cout << "Enter student details for sign-up:" << endl;
     email = validation.inputEmailValidation();
+    if (email == "") {
+        cout << "Returning to main menu..." << endl;
+        return;
+    }
     password = validation.inputPasswordValidation();
 
+    cin.clear(); cin.ignore(1000, '\n');
     cout << "First Name: ";
-    cin >> firstName;
+    getline(cin, firstName);
     cout << "Last Name: ";
-    cin >> lastName;
+    getline(cin, lastName);
 
     fullName = firstName + " " + lastName;
 
     cout << "Age: ";
     age = validation.inputAgeValidation();
 
+    cin.clear(); cin.ignore(1000, '\n');
     cout << "Mobile Number: ";
-    cin >> mobile;
+    getline(cin, mobile);
     address = validation.inputAddress();
 
     cout << "Is Domestic (1 for Yes, 0 for No): ";
-    cin >> isDomestic;
+    isDomestic = validation.inputNumber(1);
 
     selectedCourses = selectCourses();
 
@@ -279,7 +286,8 @@ void studentSignUpJSON() {
     cout << "Student registered and saved successfully!" << endl;
 }
 
-void studentLogin(const string& email) {
+void studentMenu(const string& email) {
+    Validation v;
     setColor(10);
     cout << "Student login successful!" << endl;
     Sleep(1000);
@@ -351,8 +359,8 @@ void studentLogin(const string& email) {
             }
             cout << "Enter the number of the course to remove (or 0 to cancel): ";
 
-            int courseChoice;
-            cin >> courseChoice;
+            int courseChoice{};
+            courseChoice = v.inputNumber(3);
 
             if (courseChoice > 0 && courseChoice <= courses.size()) {
                 string courseToRemove = courses[courseChoice - 1];
@@ -389,7 +397,7 @@ void studentLogin(const string& email) {
     }
 }
 
-void adminLogin(string& email) {
+void adminMenu(string& email) {
     setColor(12);
     cout << "Admin login successful!" << endl;
     Sleep(1000);
@@ -468,8 +476,9 @@ vector<string> selectCourses(const vector<string> &studentCourses) {
         for (int i = 0; i < selectedCourses.size(); i++){
             cout << i + 1 << ". " << selectedCourses[i] << endl;
         }
+        cout << endl;
     }
-    cout << endl;
+    
 
     cout << "Select a course (1-6): \n";
     for (int i = 0; i < availableCourses.size(); ++i) {
@@ -501,7 +510,7 @@ vector<string> selectCourses(const vector<string> &studentCourses) {
     return selectedCourses;
 }
 
-void signInProcedure() {
+void loginProcedure() {
     Validation v;
     string email, password;
 
@@ -509,24 +518,28 @@ void signInProcedure() {
     while (true) {
         cout << "Enter email: ";
         getline(cin, email);
+        if (email == "0") {
+            cout << "Returning to main menu..." << endl;
+            return;
+        }
 
         password = v.inputPassword();
 
-        if (signIn(email, password)) {
+        if (login(email, password)) {
             break;
         }
 
-        cout << "Incorrect password or email, please enter again!" << endl;
+        cout << "Incorrect password or email, please enter again! or enter 0 to go back to main menu" << endl;
     }
 
     // Check if the user is a student and show their details
     if (students.find(email) != students.end()) {
-        studentLogin(email);
+        studentMenu(email);
         return;
     }
     // not really needed but makes life a whole lot easier, code more readable
     if (admins.find(email) != admins.end()) {
-        adminLogin(email);
+        adminMenu(email);
         return;
     }
 
@@ -563,7 +576,7 @@ void loadAdminsFromFile() {
 }
 
 // Sign-in function
-bool signIn(const string& email, const string& password) {
+bool login(const string& email, const string& password) {
     if (admins.find(email) != admins.end()) {
         if (admins[email].login(email, password)) {
             setColor(10);

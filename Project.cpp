@@ -42,9 +42,9 @@ int main() {
 
         if (choice == 2) {
             setColor(10); // Green for success messages
-            cout << "Sign in selected!" << endl;
+            cout << "Log in selected!" << endl;
             setColor(15); // Reset color
-            signInProcedure();
+            loginProcedure();
             Sleep(1000);
             continue;
         } 
