@@ -19,7 +19,6 @@
         "address": "hitaker place grafton aucklan 1010",
         "age": 20,
         "courses": [
-            "Bachelor of Software Engineering",
             "Diploma in Creative Digital Design"
         ],
         "email": "a",
@@ -79,47 +78,19 @@
         "password": "QWEqwe123!"
     },
     {
-        "address": "23 2131 213",
+        "address": "whitaker place",
         "age": 20,
         "courses": [
-            "Diploma in Digital Design - Web and Graphic Design"
+            "Bachelor of Software Engineering",
+            "Diploma in Creative Digital Design",
+            "Diploma in Film and Content Creation"
         ],
-        "email": "j@a.com",
-        "firstName": "j",
-        "fullName": "j a",
-        "isDomestic": false,
-        "lastName": "a",
-        "mobile": "aa",
-        "password": "QWWEqwe123!"
-    },
-    {
-        "address": "hiraker",
-        "age": 20,
-        "courses": [
-            "Diploma in Digital Design - Web and Graphic Design"
-        ],
-        "email": "a@jj.com",
+        "email": "j@j.com",
         "firstName": "J",
         "fullName": "J A",
         "isDomestic": false,
         "lastName": "A",
-        "mobile": "here does this go",
-        "password": "QWEqwe123!"
-    },
-    {
-        "address": "aa aaa aa",
-        "age": 20,
-        "courses": [
-            "Diploma in Digital Design - Web and Graphic Design",
-            "Bachelor of Software Engineering",
-            "Diploma in Creative Digital Design"
-        ],
-        "email": "a@jas.com",
-        "firstName": "j",
-        "fullName": "j a",
-        "isDomestic": false,
-        "lastName": "a",
-        "mobile": "221 213 1231",
-        "password": "QWEqwe123!"
+        "mobile": "123 213 432",
+        "password": "QWEqe123!"
     }
 ]
