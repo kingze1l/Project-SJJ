@@ -308,7 +308,7 @@ void studentMenu(const string& email) {
         cout << "5. Log Out\n";        // Adjusted menu
         setColor(15);
         cout << "Choose an option: ";
-        cin >> studentChoice;
+        studentChoice = v.inputNumber(5);
 
         switch (studentChoice) {
         case 1:
@@ -398,6 +398,7 @@ void studentMenu(const string& email) {
 }
 
 void adminMenu(string& email) {
+    Validation v;
     setColor(12);
     cout << "Admin login successful!" << endl;
     Sleep(1000);
@@ -413,7 +414,7 @@ void adminMenu(string& email) {
         setColor(12); // Red for admin options
         cout << "1. View All Students\n2. View Domestic Students\n3. View International Students\n4. Remove a Student\n5. Sign Out\n";
         cout << "Choose an admin option: ";
-        cin >> adminChoice;
+        adminChoice = v.inputNumber(5);
 
         switch (adminChoice) {
         case 1:

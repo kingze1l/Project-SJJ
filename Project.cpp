@@ -30,7 +30,6 @@ int main() {
             break;
         }
 
-
         if (choice == 1) {
             setColor(10); // Green for success messages
             cout << "Student Sign-Up selected." << endl;
