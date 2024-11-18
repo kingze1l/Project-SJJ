@@ -129,12 +129,17 @@
   <ItemGroup>
     <ClCompile Include="Class.cpp" />
     <ClCompile Include="Display.cpp" />
+    <ClCompile Include="encryption.cpp" />
+    <ClCompile Include="encryption\aes.c" />
     <ClCompile Include="Project.cpp" />
     <ClCompile Include="validation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class.h" />
     <ClInclude Include="Display.h" />
+    <ClInclude Include="encryption.h" />
+    <ClInclude Include="encryption\aes.h" />
+    <ClInclude Include="encryption\aes.hpp" />
     <ClInclude Include="validation.h" />
   </ItemGroup>
   <ItemGroup>

@@ -12,6 +12,7 @@
 #include "Display.h"
 #include "Class.h"
 #include "validation.h"
+#include "encryption.h"
 
 using namespace std;
 using namespace nlohmann;
@@ -221,7 +222,27 @@ void studentSignUpJSON() {
         return;
     }
 
-    password = validation.inputPasswordValidation();
+    // ENCRYPTION
+
+    encrypt::Encryption encryptClass;
+    const uint8_t privateKey[16] = { 0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6,
+    0xab, 0xf7, 0x97, 0x75, 0x46, 0x65, 0x1d, 0x37};
+
+    vector<uint8_t> encrypted{};
+
+    string originalPassword = validation.inputPassword();
+    cout << "Original Password: " << originalPassword << endl;
+    encryptClass.encryptPassword(
+        originalPassword.c_str(),
+        privateKey,
+        encrypted
+    );
+
+    cout << "Encrypted Password: " << endl;
+    for (auto& i : encrypted) {
+        cout << hex << i;
+    }
+
     cout << "First Name: ";
     getline(cin, firstName);
     cout << "Last Name: ";
