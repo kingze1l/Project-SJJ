@@ -16,7 +16,7 @@ private:
 	bool isValidEmail(const std::string& email);
 
 public:
-	/*std::string inputCourseString*/
+	void discardExtraInput();
 	int inputNumber(const int& numOfOption);
 	int inputAgeValidation();
 	std::string inputPassword();

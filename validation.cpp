@@ -1,9 +1,15 @@
 #include <string>
 #include <conio.h>
 #include <regex>
+#include <string>
 #include "validation.h"
 
 using namespace std;
+
+void Validation::discardExtraInput() {
+    cin.clear();
+    cin.ignore(1000, '\n');
+}
 
 bool Validation::isValidPassword(const string& password) {
     // regex pattern for password validation
@@ -21,8 +27,7 @@ int Validation::inputNumber(const int& numOfOption) {
     int num{};
     cin >> num;
     while (cin.fail() || (num > numOfOption)) {
-        cin.clear();
-        cin.ignore(1000, '\n');
+        discardExtraInput();
         cout << "Please input from the options available!\nOption: ";
         cin >> num;
     }
@@ -49,10 +54,11 @@ string Validation::inputPassword() {
 
 
 string Validation::inputEmailValidation() {
-    string email;
+    string email{};
+    discardExtraInput();
     while (true) {
         cout << "Email: ";
-        cin >> email;
+        getline(cin, email);
 
         if (email == "0") {
             return "";
@@ -87,6 +93,7 @@ string Validation::inputPasswordValidation() {
             cout << "- Contains at least one lowercase letter" << endl;
             cout << "- Contains at least one digit" << endl;
             cout << "- Contains at least one special character (e.g., @, #, $, etc.)" << endl;
+            cout << "- No space" << endl;
         }
     }
     return password;
@@ -101,8 +108,7 @@ int Validation::inputAgeValidation() {
         }
 
         if (cin.fail()) {
-            cin.clear();
-            cin.ignore(1000, '\n');
+            discardExtraInput();
             cout << "Please input a number! " << endl;
             cout << "Age: ";
             cin >> age;
@@ -119,8 +125,6 @@ int Validation::inputAgeValidation() {
 string Validation::inputAddress() {
     string address{};
     cout << "Address: ";
-    cin.clear();
-    cin.ignore();
     getline(cin, address);
 
     return address;

@@ -220,9 +220,8 @@ void studentSignUpJSON() {
         cout << "Returning to main menu..." << endl;
         return;
     }
-    password = validation.inputPasswordValidation();
 
-    cin.clear(); cin.ignore(1000, '\n');
+    password = validation.inputPasswordValidation();
     cout << "First Name: ";
     getline(cin, firstName);
     cout << "Last Name: ";
@@ -233,7 +232,7 @@ void studentSignUpJSON() {
     cout << "Age: ";
     age = validation.inputAgeValidation();
 
-    cin.clear(); cin.ignore(1000, '\n');
+    validation.discardExtraInput();
     cout << "Mobile Number: ";
     getline(cin, mobile);
     address = validation.inputAddress();
@@ -412,7 +411,7 @@ void adminMenu(string& email) {
 
         cout << "\n-- Admin Menu --\n";
         setColor(12); // Red for admin options
-        cout << "1. View All Students\n2. View Domestic Students\n3. View International Students\n4. Remove a Student\n5. Sign Out\n";
+        cout << "1. View All Students\n2. View Domestic Students\n3. View International Students\n4. Remove a Student\n5. Log Out\n";
         cout << "Choose an admin option: ";
         adminChoice = v.inputNumber(5);
 
@@ -441,7 +440,7 @@ void adminMenu(string& email) {
             admins[email].viewAllStudentsEmail(students);
 
             cout << "Enter student email to remove: ";
-            cin.clear(); cin.ignore(1000, '\n');
+            v.discardExtraInput();
             getline(cin, studentEmail);
             admins[email].removeStudent(students, studentEmail);
             Sleep(1000);
@@ -515,7 +514,7 @@ void loginProcedure() {
     Validation v;
     string email, password;
 
-    cin.clear(); cin.ignore(1000, '\n');
+    v.discardExtraInput();
     while (true) {
         cout << "Enter email: ";
         getline(cin, email);
