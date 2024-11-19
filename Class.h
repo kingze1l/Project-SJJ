@@ -29,7 +29,6 @@ private:
     std::string lastName;
     std::string fullName;
     std::string mobile;
-    std::string course;
     std::string address;
     int age;
     bool isDomestic;
@@ -37,20 +36,33 @@ private:
 
 public:
     Student() = default;
-    Student(std::string email, std::string password, std::string firstName, std::string lastName, std::string fullName, std::string mobile, std::string address, int age, bool isDomestic , std::vector<std::string> courses)
-        : User(email, password), firstName(firstName), lastName(lastName), fullName(fullName), mobile(mobile), address(address), age(age), isDomestic(isDomestic) , courses(courses) {}
+    Student(std::string email, std::string password, std::string firstName, std::string lastName, std::string fullName, std::string mobile, std::string address, int age, bool isDomestic, std::vector<std::string> courses)
+        : User(email, password), firstName(firstName), lastName(lastName), fullName(fullName), mobile(mobile), address(address), age(age), isDomestic(isDomestic), courses(courses) {
+    }
 
     bool getIsDomestic() const;
 
     void showDetails() const;
 
-    std::vector<std::string> getCourses() const; // this is a getter for courses. (sami)
-    void removeCourse(const std::string& course); // added so we student can remove courses
-    void renewCourse(const std::vector<std::string>& course); // function to add a course 
+    std::vector<std::string> getCourses() const; // Getter for courses
+
+    void removeCourse(const std::string& course); // Allows student to remove courses
+    void renewCourse(const std::vector<std::string>& course); // Function to add a course 
+
+    // Getter for firstName
+    std::string getFirstName() const {
+        return firstName;
+    }
+
+    // Getter for lastName
+    std::string getLastName() const {
+        return lastName;
+    }
 
     // Load student details from a file
     static void loadFromFileJSON(std::ifstream& inFile, std::unordered_map<std::string, Student>& students);
 };
+
 
 // Derived Admin class
 class Admin : public User {
@@ -58,7 +70,7 @@ public:
     Admin() = default;
     Admin(std::string email, std::string password) : User(email, password) {}
 
-
+    
     void viewAllStudents(const std::unordered_map<std::string, Student>& students) const;
 
     void viewDomesticStudents(const std::unordered_map<std::string, Student>& students) const;
@@ -71,6 +83,8 @@ public:
     static void loadFromFileJSON(std::ifstream& inFile, std::unordered_map<std::string, Admin>& admins);
 
     void viewAllStudentsEmail(const std::unordered_map<std::string, Student>& students) const;
+
+    void searchStudentsByName(const std::unordered_map<std::string, Student>& students, const std::string& name) const;
 };
 
 extern std::unordered_map<std::string, Student> students;

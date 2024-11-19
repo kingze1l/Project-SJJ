@@ -92,5 +92,19 @@
         "lastName": "A",
         "mobile": "123 213 432",
         "password": "QWEqe123!"
+    },
+    {
+        "address": "44 trevola street new windsor ",
+        "age": 23,
+        "courses": [
+            "Bachelor of Software Engineering"
+        ],
+        "email": "Sami@123.com",
+        "firstName": "Sami ",
+        "fullName": "Sami  jan",
+        "isDomestic": false,
+        "lastName": "jan",
+        "mobile": "0221220887",
+        "password": "Sami@123"
     }
 ]
