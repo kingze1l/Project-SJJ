@@ -130,6 +130,24 @@ void Admin::viewAllStudentsEmail(const std::unordered_map<std::string, Student>&
     }
     cout << "-----------------" << endl;
 }
+void Admin::searchStudentsByName(const std::unordered_map<std::string, Student>& students, const std::string& name) const {
+    cout << "\n-- Search Results for \"" << name << "\" --" << endl;
+    bool found = false;
+    
+    for (const auto& pair : students) {
+        const Student& student = pair.second;
+        if (student.getFirstName() == name || student.getLastName() == name) {
+            student.showDetails();
+            cout << "-----------------" << endl;
+            found = true;
+        }
+    }
+    
+    if (!found) {
+        cout << "No students found with the name \"" << name << "\"." << endl;
+    }
+}
+
 
 void removeStudentJson(const string& email);
 void Admin::removeStudent(unordered_map<string, Student>& students, string studentEmail) const {
@@ -155,6 +173,7 @@ void Admin::loadFromFileJSON(ifstream& inFile, unordered_map<string, Admin>& adm
         admins[email] = Admin(email, password);
     }
 }
+
 
 vector<string> selectCourses(const vector<string>& studentCourses = {}); // Forward declaration
 
@@ -432,9 +451,9 @@ void adminMenu(string& email) {
 
         cout << "\n-- Admin Menu --\n";
         setColor(12); // Red for admin options
-        cout << "1. View All Students\n2. View Domestic Students\n3. View International Students\n4. Remove a Student\n5. Log Out\n";
+        cout << "1. View All Students\n2. View Domestic Students\n3. View International Students\n4. Remove a Student\n5. Search student by name\n6. Log out\n";
         cout << "Choose an admin option: ";
-        adminChoice = v.inputNumber(5);
+        adminChoice = v.inputNumber(6);
 
         switch (adminChoice) {
         case 1:
@@ -467,7 +486,17 @@ void adminMenu(string& email) {
             Sleep(1000);
             break;
         }
-        case 5:
+        case 5: {
+            system("cls");
+            string nameToSearch;
+            cout << "Enter the name to search: ";
+            cin >> nameToSearch;
+            admins[email].searchStudentsByName(students, nameToSearch);
+            cout << "\nPress any key to return to admin menu...";
+            _getch();
+            break;
+        }
+        case 6:
             cout << "Logging out...";
             keepAdminLoggedIn = false; // Exit admin menu
             break;
