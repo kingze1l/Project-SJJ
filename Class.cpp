@@ -262,7 +262,7 @@ void studentSignUpJSON() {
     getline(cin, mobile);
     address = validation.inputAddress();
 
-    cout << "Is Domestic (1 for Yes, 0 for No): ";
+    cout << "Are you a domestic student? (1 for Yes, 0 for No): ";
     isDomestic = validation.inputNumber(1);
 
     selectedCourses = selectCourses();
@@ -557,10 +557,7 @@ void loginProcedure() {
 
         encryptClass.encryptPassword(password.c_str(), privateKey, encryptedPassword);
         password = encryptClass.symbolToHex(encryptedPassword);
-        /*
-        DEBUG PURPOSES:
-        cout << "ENCRYPTED PASSWORD TO CHECK: " << password << endl;
-        */
+        
 
         if (login(email, password)) {
             break;
@@ -611,6 +608,7 @@ void loadAdminsFromFile() {
         inFile.close();
     }
 }
+
 
 // Sign-in function
 bool login(const string& email, const string& password) {
