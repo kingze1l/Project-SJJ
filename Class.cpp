@@ -627,7 +627,7 @@ void loadStudentsFromFile() {
 
 // Function to load admins from a file
 void loadAdminsFromFile() {
-    ifstream inFile("new_admins.json");
+    ifstream inFile("adminnew.json");
     if (inFile.is_open()) {
         Admin::loadFromFileJSON(inFile, admins);
         inFile.close();
