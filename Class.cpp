@@ -230,7 +230,7 @@ void studentSignUpJSON() {
 
     vector<uint8_t> encrypted{};
 
-    string originalPassword = validation.inputPassword();
+    string originalPassword = validation.inputPasswordValidation();
     // DEBUG PURPOSES
     // cout << "Original Password: " << originalPassword << endl;
     encryptClass.encryptPassword(
