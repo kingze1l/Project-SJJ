@@ -239,10 +239,6 @@ void studentSignUpJSON() {
         encrypted
     );
 
-    cout << "Encrypted Password: ";
-    for (auto& i : encrypted) {
-        cout << hex << int(i);
-    }
     password = encryptClass.symbolToHex(encrypted);
 
     cout << endl;
