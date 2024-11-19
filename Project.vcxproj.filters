@@ -27,6 +27,12 @@
     <ClCompile Include="validation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="encryption.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="encryption\aes.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Display.h">
@@ -36,6 +42,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="validation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="encryption.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="encryption\aes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="encryption\aes.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

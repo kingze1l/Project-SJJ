@@ -1,6 +1,28 @@
 #include "encryption.h"
+#include <sstream>
+#include <iomanip>
 
 using namespace std;
+
+string encrypt::Encryption::symbolToHex(const std::vector<uint8_t>& vec) {
+    ostringstream oss{};
+    for (uint8_t byte : vec) {
+        oss << setw(2) << setfill('0') << hex << (int)byte;
+    }
+    return oss.str();
+}
+
+
+string encrypt::Encryption::hexToSymbols(const string& hex) {
+    string res{};
+    for (size_t i = 0; i < hex.length(); i += 2) {
+        string byteString = hex.substr(i, 2);
+        char byte = static_cast<char>(std::stoi(byteString, nullptr, 16)); // convert hex to char
+        res += byte;
+    }
+    return res;
+}
+
 void encrypt::Encryption::encryptPassword(const char* password, const uint8_t* key, std::vector<uint8_t>& encrypted) {
     AES_ctx ctx;
     AES_init_ctx(&ctx, key);
@@ -23,7 +45,7 @@ void encrypt::Encryption::encryptPassword(const char* password, const uint8_t* k
     }
 }
 
-void decryptPassword(const vector<uint8_t>& encrypted, const uint8_t* key, vector<uint8_t>& decrypted) {
+void encrypt::Encryption::decryptPassword(const vector<uint8_t>& encrypted, const uint8_t* key, vector<uint8_t>& decrypted) {
     AES_ctx ctx;
     AES_init_ctx(&ctx, key);
 

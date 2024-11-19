@@ -12,6 +12,7 @@
 #include "Display.h"
 #include "Class.h"
 #include "validation.h"
+#include "encryption.h"
 
 using namespace std;
 using namespace nlohmann;
@@ -240,7 +241,27 @@ void studentSignUpJSON() {
         return;
     }
 
-    password = validation.inputPasswordValidation();
+    // ENCRYPTION
+
+    encrypt::Encryption encryptClass;
+    const uint8_t privateKey[16] = { 0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6,
+    0xab, 0xf7, 0x97, 0x75, 0x46, 0x65, 0x1d, 0x37};
+
+    vector<uint8_t> encrypted{};
+
+    string originalPassword = validation.inputPasswordValidation();
+    // DEBUG PURPOSES
+    // cout << "Original Password: " << originalPassword << endl;
+    encryptClass.encryptPassword(
+        originalPassword.c_str(),
+        privateKey,
+        encrypted
+    );
+
+    password = encryptClass.symbolToHex(encrypted);
+
+    cout << endl;
+
     cout << "First Name: ";
     getline(cin, firstName);
     cout << "Last Name: ";
@@ -256,7 +277,7 @@ void studentSignUpJSON() {
     getline(cin, mobile);
     address = validation.inputAddress();
 
-    cout << "Is Domestic (1 for Yes, 0 for No): ";
+    cout << "Are you a domestic student? (1 for Yes, 0 for No): ";
     isDomestic = validation.inputNumber(1);
 
     selectedCourses = selectCourses();
@@ -541,6 +562,7 @@ vector<string> selectCourses(const vector<string> &studentCourses) {
 
 void loginProcedure() {
     Validation v;
+    encrypt::Encryption encryptClass;
     string email, password;
 
     v.discardExtraInput();
@@ -553,6 +575,14 @@ void loginProcedure() {
         }
 
         password = v.inputPassword();
+        vector<uint8_t> encryptedPassword{};
+        
+        const uint8_t privateKey[16] = { 0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6,
+        0xab, 0xf7, 0x97, 0x75, 0x46, 0x65, 0x1d, 0x37 };
+
+        encryptClass.encryptPassword(password.c_str(), privateKey, encryptedPassword);
+        password = encryptClass.symbolToHex(encryptedPassword);
+        
 
         if (login(email, password)) {
             break;
@@ -603,6 +633,7 @@ void loadAdminsFromFile() {
         inFile.close();
     }
 }
+
 
 // Sign-in function
 bool login(const string& email, const string& password) {
