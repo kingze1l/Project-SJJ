@@ -231,17 +231,21 @@ void studentSignUpJSON() {
     vector<uint8_t> encrypted{};
 
     string originalPassword = validation.inputPassword();
-    cout << "Original Password: " << originalPassword << endl;
+    // DEBUG PURPOSES
+    // cout << "Original Password: " << originalPassword << endl;
     encryptClass.encryptPassword(
         originalPassword.c_str(),
         privateKey,
         encrypted
     );
 
-    cout << "Encrypted Password: " << endl;
+    cout << "Encrypted Password: ";
     for (auto& i : encrypted) {
-        cout << hex << i;
+        cout << hex << int(i);
     }
+    password = encryptClass.symbolToHex(encrypted);
+
+    cout << endl;
 
     cout << "First Name: ";
     getline(cin, firstName);
@@ -533,6 +537,7 @@ vector<string> selectCourses(const vector<string> &studentCourses) {
 
 void loginProcedure() {
     Validation v;
+    encrypt::Encryption encryptClass;
     string email, password;
 
     v.discardExtraInput();
@@ -545,6 +550,17 @@ void loginProcedure() {
         }
 
         password = v.inputPassword();
+        vector<uint8_t> encryptedPassword{};
+        
+        const uint8_t privateKey[16] = { 0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6,
+        0xab, 0xf7, 0x97, 0x75, 0x46, 0x65, 0x1d, 0x37 };
+
+        encryptClass.encryptPassword(password.c_str(), privateKey, encryptedPassword);
+        password = encryptClass.symbolToHex(encryptedPassword);
+        /*
+        DEBUG PURPOSES:
+        cout << "ENCRYPTED PASSWORD TO CHECK: " << password << endl;
+        */
 
         if (login(email, password)) {
             break;
