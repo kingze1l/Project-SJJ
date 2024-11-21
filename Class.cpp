@@ -295,11 +295,11 @@ void studentSignUpJSON() {
 
     vector<uint8_t> encrypted{};
     
-    string originalPassword, confirmPassword;
+    string originalPassword{}, confirmPassword{};
     while (true) {
-        string originalPassword = validation.inputPasswordValidation();
+        originalPassword = validation.inputPasswordValidation();
         cout << "Confirm Password..." << endl;
-        string confirmPassword = validation.inputPassword();
+        confirmPassword = validation.inputPassword();
         if (originalPassword != confirmPassword) {
             cout << "Password do not match, please insert again!" << endl;
             continue;

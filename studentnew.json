@@ -73,21 +73,6 @@
         "password": "ab95576a8876e234562a4a44f2156c94"
     },
     {
-        "address": "whitakewr gradtorna sa",
-        "age": 100,
-        "courses": [
-            "Diploma in Digital Design - Web and Graphic Design",
-            "Bachelor of IT - Software Engineering"
-        ],
-        "email": "a@aa.comwd",
-        "firstName": "joan",
-        "fullName": "joan allysen",
-        "isDomestic": false,
-        "lastName": "allysen",
-        "mobile": "0221220884",
-        "password": "14164d0a227c8c35bc8dfecc96d89419"
-    },
-    {
         "address": "whitaker place",
         "age": 20,
         "courses": [
@@ -104,19 +89,17 @@
         "password": "a6b61e2f517ed12f2409dff3f4df2444"
     },
     {
-        "address": "whitaker place",
-        "age": 20,
+        "address": "Whitaker Place",
+        "age": 18,
         "courses": [
-            "Diploma in Digital Design - Web and Graphic Design",
-            "Bachelor of IT - Software Engineering",
             "Diploma in Language Studies"
         ],
-        "email": "q@a.com",
-        "firstName": "j",
-        "fullName": "j a",
+        "email": "joanallys@gmail.com",
+        "firstName": "Joan",
+        "fullName": "Joan Allysen",
         "isDomestic": false,
-        "lastName": "a",
+        "lastName": "Allysen",
         "mobile": "0222333444",
-        "password": ""
+        "password": "14164d0a227c8c35bc8dfecc96d89419"
     }
 ]
