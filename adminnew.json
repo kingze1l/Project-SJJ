@@ -1,14 +1,82 @@
 [
     {
         "email": "samijan@talenthub.com",
-        "password": "admin1"
+        "password": "638b251f4cfce80531fa77b86b83ccf3"
     },
     {
         "email": "jason@talenthub.com",
         "password": "jasonadmin"
     },
     {
-      "email": "q",
+      "email": "qwerty@talenthub.com",
       "password": "c926776f82f43beb1a07513d3771572c"
+    },
+    {
+      "email": "admin1@talenthub.com",
+      "password": "ab95576a8876e234562a4a44f2156c94"
+    },
+    {
+      "email": "jane@talenthub.com",
+      "password": "4f2be549ff3e1d3ea0ecbb88dcd8f0d1"
+    },
+    {
+      "email": "abdul@talenthub.com",
+      "password": "b9bf3581661e9d0b1582fc6d69e536c4"
+    },
+    {
+    "email": "jany@talenthub.com",
+    "password": "45eab3237cf9c2cd5dca56b537250ae0"
+    },
+    {
+      "email": "janette@talenthub.com",
+      "password": "6dacf1bb45bac68e8325648aed83f9e3"
+    },
+    {
+    "email": "jayden@talenthub.com",
+    "password": "61542fb1933c6d96c2c1739ffa072f8f"
+    },
+    {
+      "email": "nita@talenthub.com",
+      "password": "c4162a8528d057950778aeb8419250c0"
+    },
+    {
+      "email": "andersen@talenthub.com",
+      "password": "4341c3d0a7c687d52df3566fe997a0c1"
+    },
+    {
+      "email": "jarilo@talenthub.com",
+      "password": "b2fe5b25cf6afeef1b0f79fd5e534cb4"
+    },
+    {
+      "email": "opi@talenthub.com",
+      "password": "e9483dc3f4ae76512a14f35f60f9e7d7"
+    },
+    {
+      "email": "bruleen@talenthub.com",
+      "password": "6d8e7b9f29fd916c08f46c20c2533f4a"
+    },
+    {
+      "email": "julian@talenthub.com",
+      "password": "4c38537fbde4b5da082eaccd17a120fa"
+    },
+    {
+      "email": "chryl@talenthub.com",
+      "password": "ae0f13750d0c34b65c1581cd22233592"
+    },
+    {
+      "email": "clorine@talenthub.com",
+      "password": "8672cbb8f71486a14037612e60cea737"
+    },
+    {
+      "email": "quilla@talenthub.com",
+      "password": "c926776f82f43beb1a07513d3771572c"
+    },
+    {
+      "email": "robert@talenthub.com",
+      "password": "4f2be549ff3e1d3ea0ecbb88dcd8f0d1"
+    },
+    {
+      "email": "steven@talenthub.com",
+      "password": "c94b44f6d90b797216e3f2e754af1ba0"
     }
 ]
