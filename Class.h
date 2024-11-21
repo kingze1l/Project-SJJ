@@ -77,13 +77,14 @@ public:
 
     void viewInternationalStudents(const std::unordered_map<std::string, Student>& students) const;
 
-    void removeStudent(std::unordered_map<std::string, Student>& students, std::string studentEmail) const;
-
+    void removeStudent(std::unordered_map<std::string, Student>& students, std::string studentEmail);
+    void removeStudentCourse(std::unordered_map<std::string, Student>& students, std::string studentEmail);
     // Load admin details from a file
     static void loadFromFileJSON(std::ifstream& inFile, std::unordered_map<std::string, Admin>& admins);
 
     void viewAllStudentsEmail(const std::unordered_map<std::string, Student>& students) const;
 
+    void viewAllStudentsName(const std::unordered_map<std::string, Student>& students) const;
     void searchStudentsByName(const std::unordered_map<std::string, Student>& students, const std::string& name) const;
 };
 

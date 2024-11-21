@@ -94,34 +94,35 @@ void Student::loadFromFileJSON(ifstream& inFile, unordered_map<string, Student>&
 
 // ADMIN
 void Admin::viewAllStudents(const unordered_map<string, Student>& students) const {
-    cout << "\n-- All Students --" << endl;
+    cout << "All Students\n---------------------------------------------------------" << endl;
     for (const auto& pair : students) {
+        cout << endl;
         pair.second.showDetails();
-        cout << "-----------------" << endl;
+        cout << "---------------------------------------------------------" << endl;
     }
 }
 
 void Admin::viewDomesticStudents(const unordered_map<string, Student>& students) const {
-    cout << "\n-- Domestic Students --" << endl;
+    cout << "Domestic Students\n---------------------------------------------------------" << endl;
     for (const auto& pair : students) {
         if (pair.second.getIsDomestic()) {
             pair.second.showDetails();
-            cout << "-----------------" << endl;
+            cout << "---------------------------------------------------------" << endl;
         }
     }
 }
 
 void Admin::viewInternationalStudents(const unordered_map<string, Student>& students) const {
-    cout << "\n-- International Students --" << endl;
+    cout << "International Students\n---------------------------------------------------------" << endl;
     for (const auto& pair : students) {
         if (!pair.second.getIsDomestic()) {
             pair.second.showDetails();
-            cout << "-----------------" << endl;
+            cout << "---------------------------------------------------------" << endl;
         }
     }
 }
 
-void Admin::viewAllStudentsEmail(const std::unordered_map<std::string, Student>& students) const {
+void Admin::viewAllStudentsEmail(const unordered_map<string, Student>& students) const {
     int counter{};
     cout << "\n-- All Students' Email --" << endl;
     for (const auto& pair : students) {
@@ -130,7 +131,16 @@ void Admin::viewAllStudentsEmail(const std::unordered_map<std::string, Student>&
     }
     cout << "-----------------" << endl;
 }
-void Admin::searchStudentsByName(const std::unordered_map<std::string, Student>& students, const std::string& name) const {
+
+void Admin::viewAllStudentsName(const unordered_map<string, Student>& students) const {
+    int counter = 1;
+    cout << "\n--All Students' Name --" << endl;
+    for (const auto& pair : students) {
+        cout << counter++ << ". " << pair.second.getFirstName() + " " + pair.second.getLastName() << endl;
+    }
+}
+
+void Admin::searchStudentsByName(const unordered_map<string, Student>& students, const std::string& name) const {
     cout << "\n-- Search Results for \"" << name << "\" --" << endl;
     bool found = false;
     
@@ -150,7 +160,7 @@ void Admin::searchStudentsByName(const std::unordered_map<std::string, Student>&
 
 
 void removeStudentJson(const string& email);
-void Admin::removeStudent(unordered_map<string, Student>& students, string studentEmail) const {
+void Admin::removeStudent(unordered_map<string, Student>& students, string studentEmail) {
     if (students.find(studentEmail) != students.end()) {
         students.erase(studentEmail);
         removeStudentJson(studentEmail);
@@ -158,6 +168,36 @@ void Admin::removeStudent(unordered_map<string, Student>& students, string stude
     }
     else {
         cout << "Student not found." << endl;
+    }
+}
+
+void Admin::removeStudentCourse(unordered_map<string, Student>& students, string studentEmail) {
+    Validation v;
+    cout << "Select a course to remove from: " << students[studentEmail].getFirstName() << endl;
+    vector<string> courses = students[studentEmail].getCourses();
+    for (size_t i = 0; i < courses.size(); ++i) {
+        cout << (i + 1) << ". " << courses[i] << endl;
+    }
+    cout << "Enter the number of the course to remove (or 0 to cancel): ";
+
+    int courseChoice{};
+    courseChoice = v.inputNumber(courses.size());
+
+    if (courseChoice > 0 && courseChoice <= courses.size()) {
+        string courseToRemove = courses[courseChoice - 1];
+        students[studentEmail].removeCourse(courseToRemove);
+        updateStudentCourseJson(students[studentEmail].getEmail(), students[studentEmail].getCourses());
+
+        setColor(10);  // Light Green for success message
+        cout << "Course \"" << courseToRemove << "\" removed successfully!" << endl;
+    }
+    else if (courseChoice == 0) {
+        setColor(15);  // White for no action
+        cout << "No course removed." << endl;
+    }
+    else {
+        setColor(12);  // Red for invalid selection
+        cout << "Invalid selection." << endl;
     }
 }
 
@@ -401,7 +441,7 @@ void studentMenu(const string& email) {
             cout << "Enter the number of the course to remove (or 0 to cancel): ";
 
             int courseChoice{};
-            courseChoice = v.inputNumber(3);
+            courseChoice = v.inputNumber(courses.size());
 
             if (courseChoice > 0 && courseChoice <= courses.size()) {
                 string courseToRemove = courses[courseChoice - 1];
@@ -453,7 +493,7 @@ void adminMenu(string& email) {
 
         cout << "\n-- Admin Menu --\n";
         setColor(12); // Red for admin options
-        cout << "1. View All Students\n2. View Domestic Students\n3. View International Students\n4. Remove a Student\n5. Search student by name\n6. Log out\n";
+        cout << "1. View All Students\n2. View Domestic Students\n3. View International Students\n4. Remove a Student\n5. Remove a Student Course \n6. Search Student by Name\n7. Log Out\n";
         cout << "Choose an admin option: ";
         adminChoice = v.inputNumber(6);
 
@@ -490,7 +530,33 @@ void adminMenu(string& email) {
         }
         case 5: {
             system("cls");
-            string nameToSearch;
+            admins[email].viewAllStudentsEmail(students);
+
+            string searchEmail{};
+            cout << "Please enter the email of the student you want to remove the course of" << endl;
+            cout << "Email : ";
+
+            v.discardExtraInput();
+            getline(cin, searchEmail);
+            while (true) {
+                if (students.find(searchEmail) == students.end()) {
+                    cout << "Email is not found, please try again!" << endl;
+                    cout << "Email: ";
+                    getline(cin, searchEmail);
+                    continue;
+                }
+                break;
+            }
+
+            admins[email].removeStudentCourse(students, searchEmail);
+
+            cout << "\nPress any key to return to student menu...";
+            _getch();
+            break;
+        }
+        case 6: {
+            system("cls");
+            string nameToSearch{};
             cout << "Enter the name to search: ";
             cin >> nameToSearch;
             admins[email].searchStudentsByName(students, nameToSearch);
@@ -498,7 +564,7 @@ void adminMenu(string& email) {
             _getch();
             break;
         }
-        case 6:
+        case 7:
             cout << "Logging out...";
             keepAdminLoggedIn = false; // Exit admin menu
             break;

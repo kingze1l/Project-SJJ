@@ -33,9 +33,7 @@
         "address": "al hayer new windsor ",
         "age": 222222,
         "courses": [
-            "Diploma in Digital Design - Web and Graphic Design",
-            "Bachelor of Software Engineering",
-            "Certificate in Creative Media"
+            "Bachelor of Software Engineering"
         ],
         "email": "sa@1.com",
         "firstName": "sami",
@@ -66,7 +64,6 @@
         "age": 22,
         "courses": [
             "Certificate in Creative Media",
-            "Bachelor of Software Engineering",
             "Diploma in Film and Content Creation"
         ],
         "email": "test@123.com",
@@ -94,35 +91,19 @@
         "password": "14164d0a227c8c35bc8dfecc96d89419"
     },
     {
-      "address": "whitaker",
-      "age": 18,
-      "courses": [
-        "Diploma in Digital Design - Web and Graphic Design",
-        "Bachelor of Software Engineering",
-        "Diploma in Creative Digital Design"
-      ],
-      "email": "allysen@gmail.com",
-      "firstName": "joan",
-      "fullName": "joan allysen",
-      "isDomestic": false,
-      "lastName": "allysen",
-      "mobile": "this is real",
-      "password": "87e0d4813423ef302461358f5db12750"
-    },
-    {
-      "address": "whitaker",
-      "age": 18,
-      "courses": [
-        "Diploma in Digital Design - Web and Graphic Design",
-        "Bachelor of Software Engineering",
-        "Diploma in Creative Digital Design"
-      ],
-      "email": "a",
-      "firstName": "joan",
-      "fullName": "joan allysen",
-      "isDomestic": false,
-      "lastName": "allysen",
-      "mobile": "this is real",
-      "password": "ab95576a8876e234562a4a44f2156c94"
+        "address": "whitaker",
+        "age": 18,
+        "courses": [
+            "Diploma in Digital Design - Web and Graphic Design",
+            "Bachelor of Software Engineering",
+            "Diploma in Creative Digital Design"
+        ],
+        "email": "a",
+        "firstName": "joan",
+        "fullName": "joan allysen",
+        "isDomestic": false,
+        "lastName": "allysen",
+        "mobile": "this is real",
+        "password": "ab95576a8876e234562a4a44f2156c94"
     }
 ]
