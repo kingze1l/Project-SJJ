@@ -32,16 +32,21 @@ bool Student::getIsDomestic() const {
 }
 
 void Student::showDetails() const {
-    cout << "Student's Name: " << fullName << endl;
-    cout << "Student's Age: " << age << endl;
-    cout << "Student's Address: " << address << endl;
-    cout << "Student's Mobile Number: " << mobile << endl;
-    cout << "Email: " << email << endl;
-    cout << "Status: " << (isDomestic ? "Domestic" : "International") << endl;
-    cout << "Courses: \n";
-    int i=1;
-    for (const auto& course : students[email].getCourses()) {
-        cout << i++ <<". " << course << endl;  // Each course will be printed on a new line
+    cout << left << setw(30) << "Student's Name " << setw(10) << '|' << fullName << endl;
+    cout << left << setw(30) << "Student's Age " << setw(10) << '|' << age << endl;
+    cout << left << setw(30) << "Student's Address " << setw(10) << '|' << address << endl;
+    cout << left << setw(30) << "Student's Mobile Number "  << setw(10) << '|' << mobile << endl;
+    cout << left << setw(30) << "Email " << setw(10) << '|' << email << endl;
+    cout << left << setw(30) << "Status " << setw(10) << '|' << (isDomestic ? "Domestic" : "International") << endl;
+    if (courses.empty()) {
+        cout << left << setw(30) << "Courses " << setw(10) << '|' << "No Courses" << endl << endl;
+        return;
+    }
+
+    cout << left << setw(30) << "Courses" << setw(10) << '|' << "1. " << courses[0] << endl;
+
+    for (int i = 1; i < courses.size(); i++) {
+        cout << left << setw(30) << ' ' << setw(10) << '|' << i + 1 << ". " << courses[i] << endl;  // Each course will be printed on a new line
     }
     cout << endl;
 }
@@ -94,30 +99,35 @@ void Student::loadFromFileJSON(ifstream& inFile, unordered_map<string, Student>&
 
 // ADMIN
 void Admin::viewAllStudents(const unordered_map<string, Student>& students) const {
-    cout << "All Students\n---------------------------------------------------------" << endl;
+    cout << "All Students" << endl;
+    cout << string(100, '-') << endl;
     for (const auto& pair : students) {
         cout << endl;
         pair.second.showDetails();
-        cout << "---------------------------------------------------------" << endl;
+        cout << string(100, '-') << endl;
     }
 }
 
 void Admin::viewDomesticStudents(const unordered_map<string, Student>& students) const {
-    cout << "Domestic Students\n---------------------------------------------------------" << endl;
+    cout << "Domestic Students" << endl;
+    cout << string(100, '-') << endl;
     for (const auto& pair : students) {
         if (pair.second.getIsDomestic()) {
+            cout << endl;
             pair.second.showDetails();
-            cout << "---------------------------------------------------------" << endl;
+            cout << string(100, '-') << endl;
         }
     }
 }
 
 void Admin::viewInternationalStudents(const unordered_map<string, Student>& students) const {
-    cout << "International Students\n---------------------------------------------------------" << endl;
+    cout << "International Students" << endl;
+    cout << string(100, '-') << endl;
     for (const auto& pair : students) {
         if (!pair.second.getIsDomestic()) {
+            cout << endl;
             pair.second.showDetails();
-            cout << "---------------------------------------------------------" << endl;
+            cout << string(100, '-') << endl;
         }
     }
 }
@@ -132,11 +142,11 @@ void Admin::viewAllStudentsEmail(const unordered_map<string, Student>& students)
     cout << "-----------------" << endl;
 }
 
-void Admin::viewAllStudentsName(const unordered_map<string, Student>& students) const {
+void Admin::viewAllStudentsNameandEmail(const unordered_map<string, Student>& students) const {
     int counter = 1;
-    cout << "\n--All Students' Name --" << endl;
+    cout << "\n--All Students' Name and Email --" << endl;
     for (const auto& pair : students) {
-        cout << counter++ << ". " << pair.second.getFirstName() + " " + pair.second.getLastName() << endl;
+        cout << counter++ << ". " <<  "Email: " << left << setw(25) << pair.second.getEmail() <<  " | Full name: " << pair.second.getFirstName() + " " + pair.second.getLastName() << endl;
     }
 }
 
@@ -163,6 +173,8 @@ void removeStudentJson(const string& email);
 void Admin::removeStudent(unordered_map<string, Student>& students, string studentEmail) {
     students.erase(studentEmail);
     removeStudentJson(studentEmail);
+    setColor(10);  // Light Green for success message
+    cout << "Student is removed successfully" << endl;
 }
 
 void Admin::removeStudentCourse(unordered_map<string, Student>& students, string studentEmail) {
@@ -530,7 +542,7 @@ void adminMenu(string& email) {
         case 4: {
             system("cls");
             string studentEmail;
-            admins[email].viewAllStudentsEmail(students);
+            admins[email].viewAllStudentsNameandEmail(students);
 
             cout << "Enter student email to remove: ";
             v.discardExtraInput();
@@ -545,6 +557,7 @@ void adminMenu(string& email) {
                 }
                 break;
             }
+            if (studentEmail == "0") break;
 
             admins[email].removeStudent(students, studentEmail);
             Sleep(1000);
@@ -552,7 +565,7 @@ void adminMenu(string& email) {
         }
         case 5: {
             system("cls");
-            admins[email].viewAllStudentsEmail(students);
+            admins[email].viewAllStudentsNameandEmail(students);
 
             string searchEmail{};
             cout << "Please enter the email of the student you want to remove the course of" << endl;

@@ -16,20 +16,6 @@
         "password": "14164d0a227c8c35bc8dfecc96d89419"
     },
     {
-        "address": "whitaker place",
-        "age": 243,
-        "courses": [
-            "Diploma in Digital Design - Web and Graphic Design"
-        ],
-        "email": "a@a.com",
-        "firstName": "joan",
-        "fullName": "joan allysen2",
-        "isDomestic": false,
-        "lastName": "allysen2",
-        "mobile": "123 21 3213",
-        "password": "a6b61e2f517ed12f2409dff3f4df2444"
-    },
-    {
         "address": "al hayer new windsor ",
         "age": 222222,
         "courses": [
@@ -44,26 +30,9 @@
         "password": "fe37a348d2cd8e36b882c89c03548c37"
     },
     {
-        "address": "dfgnm",
-        "age": 234,
-        "courses": [
-            "Diploma in Digital Design - Web and Graphic Design",
-            "Diploma in Creative Digital Design"
-        ],
-        "email": "1@1.com",
-        "firstName": "sammmm",
-        "fullName": "sammmm mmmm",
-        "isDomestic": false,
-        "lastName": "mmmm",
-        "mobile": "sd9876543",
-        "password": "7d2968d45a1fd277d29afc00038387b3"
-    },
-    {
         "address": "sfd",
         "age": 22,
-        "courses": [
-            "Certificate in Creative Media"
-        ],
+        "courses": [],
         "email": "test@123.com",
         "firstName": "dave",
         "fullName": "dave dave",
@@ -93,8 +62,7 @@
         "age": 18,
         "courses": [
             "Diploma in Digital Design - Web and Graphic Design",
-            "Bachelor of Software Engineering",
-            "Diploma in Creative Digital Design"
+            "Bachelor of Software Engineering"
         ],
         "email": "a",
         "firstName": "joan",

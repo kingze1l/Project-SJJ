@@ -84,7 +84,7 @@ public:
 
     void viewAllStudentsEmail(const std::unordered_map<std::string, Student>& students) const;
 
-    void viewAllStudentsName(const std::unordered_map<std::string, Student>& students) const;
+    void viewAllStudentsNameandEmail(const std::unordered_map<std::string, Student>& students) const;
     void searchStudentsByName(const std::unordered_map<std::string, Student>& students, const std::string& name) const;
 };
 
