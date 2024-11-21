@@ -249,7 +249,7 @@ void studentSignUpJSON() {
 
     vector<uint8_t> encrypted{};
 
-    string originalPassword = validation.inputPasswordValidation();
+    string originalPassword = validation.inputPassword(); // temp to inputpassword
     // DEBUG PURPOSES
     // cout << "Original Password: " << originalPassword << endl;
     encryptClass.encryptPassword(
@@ -258,9 +258,11 @@ void studentSignUpJSON() {
         encrypted
     );
 
+
     password = encryptClass.symbolToHex(encrypted);
 
-    cout << endl;
+    // DEBUG PURPOSES
+    cout << "ENCRYPTED PASSWORD: " << password << endl;
 
     cout << "First Name: ";
     getline(cin, firstName);
@@ -512,9 +514,9 @@ vector<string> selectCourses(const vector<string> &studentCourses) {
     vector<string> availableCourses = { 
         "Certificate in Creative Media", 
         "Diploma in Digital Design - Web and Graphic Design", 
-        "Bachelor of Software Engineering", 
-        "Diploma in Creative Digital Design", 
-        "Diploma in Software Development", 
+        "Bachelor of IT - Software Engineering", 
+        "Diploma in Language Studies", 
+        "Diploma in Management", 
         "Diploma in Film and Content Creation" 
     };
 
