@@ -14,6 +14,7 @@ class Validation{
 private:
 	bool isValidPassword(const std::string& password);
 	bool isValidEmail(const std::string& email);
+	
 
 public:
 	void discardExtraInput();
@@ -23,6 +24,7 @@ public:
 	std::string inputEmailValidation();
 	std::string inputPasswordValidation();
 	std::string inputAddress();
+	static bool isValidNZMobileNumber(const std::string& number);
 };
 
 #endif // !USERVALIDATION_H

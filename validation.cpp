@@ -22,6 +22,10 @@ bool Validation::isValidEmail(const string& email) {
     regex pattern(R"((\w+)(\.\w+)*@(\w+)(\.\w+)+)");
     return regex_match(email, pattern);
 }
+bool Validation::isValidNZMobileNumber(const string& number) {
+    regex pattern(R"(^02\d{1}\d{7}$|^02\d{1}[-\s]?\d{3}[-\s]?\d{4}$)");
+    return regex_match(number, pattern);
+}
 
 int Validation::inputNumber(const int& numOfOption) {
     int num{};
@@ -103,7 +107,7 @@ int Validation::inputAgeValidation() {
     int age{};
     cin >> age;
     while (true) {
-        if (age >= 18) {
+        if (age >= 18 && age <=100 ) {
             return age;
         }
 
@@ -114,6 +118,7 @@ int Validation::inputAgeValidation() {
             cin >> age;
             continue;
         }
+
 
         cout << "This course is only available for those over 17, did you input the wrong number?" << endl;
         cout << "Age: ";

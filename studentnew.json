@@ -94,35 +94,83 @@
         "password": "14164d0a227c8c35bc8dfecc96d89419"
     },
     {
-      "address": "whitaker",
-      "age": 18,
-      "courses": [
-        "Diploma in Digital Design - Web and Graphic Design",
-        "Bachelor of Software Engineering",
-        "Diploma in Creative Digital Design"
-      ],
-      "email": "allysen@gmail.com",
-      "firstName": "joan",
-      "fullName": "joan allysen",
-      "isDomestic": false,
-      "lastName": "allysen",
-      "mobile": "this is real",
-      "password": "87e0d4813423ef302461358f5db12750"
+        "address": "whitaker",
+        "age": 18,
+        "courses": [
+            "Diploma in Digital Design - Web and Graphic Design",
+            "Bachelor of Software Engineering",
+            "Diploma in Creative Digital Design"
+        ],
+        "email": "allysen@gmail.com",
+        "firstName": "joan",
+        "fullName": "joan allysen",
+        "isDomestic": false,
+        "lastName": "allysen",
+        "mobile": "this is real",
+        "password": "87e0d4813423ef302461358f5db12750"
     },
     {
-      "address": "whitaker",
-      "age": 18,
-      "courses": [
-        "Diploma in Digital Design - Web and Graphic Design",
-        "Bachelor of Software Engineering",
-        "Diploma in Creative Digital Design"
-      ],
-      "email": "a",
-      "firstName": "joan",
-      "fullName": "joan allysen",
-      "isDomestic": false,
-      "lastName": "allysen",
-      "mobile": "this is real",
-      "password": "ab95576a8876e234562a4a44f2156c94"
+        "address": "whitaker",
+        "age": 18,
+        "courses": [
+            "Diploma in Digital Design - Web and Graphic Design",
+            "Bachelor of Software Engineering",
+            "Diploma in Creative Digital Design"
+        ],
+        "email": "a",
+        "firstName": "joan",
+        "fullName": "joan allysen",
+        "isDomestic": false,
+        "lastName": "allysen",
+        "mobile": "this is real",
+        "password": "ab95576a8876e234562a4a44f2156c94"
+    },
+    {
+        "address": "asdfg,.",
+        "age": 18,
+        "courses": [
+            "Certificate in Creative Media",
+            "Diploma in Digital Design - Web and Graphic Design",
+            "Bachelor of Software Engineering"
+        ],
+        "email": "q@1.com",
+        "firstName": "sami",
+        "fullName": "sami jan",
+        "isDomestic": true,
+        "lastName": "jan",
+        "mobile": "0221220884",
+        "password": "7d2968d45a1fd277d29afc00038387b3"
+    },
+    {
+        "address": "NEw windsor ",
+        "age": 19,
+        "courses": [
+            "Certificate in Creative Media",
+            "Bachelor of Software Engineering",
+            "Diploma in Creative Digital Design"
+        ],
+        "email": "a@1.com",
+        "firstName": "sami ",
+        "fullName": "sami  jan",
+        "isDomestic": true,
+        "lastName": "jan",
+        "mobile": "022-122-0884",
+        "password": "7d2968d45a1fd277d29afc00038387b3"
+    },
+    {
+        "address": " valhalla , norway , new vallhalla - deazmim ",
+        "age": 100,
+        "courses": [
+            "Certificate in Creative Media",
+            "Bachelor of Software Engineering",
+            "Diploma in Digital Design - Web and Graphic Design"
+        ],
+        "email": "sam@man.com",
+        "firstName": "samiii",
+        "fullName": "samiii jan",
+        "isDomestic": true,
+        "lastName": "jan",
+        "mobile": "022-122-1222",
+        "password": "7d2968d45a1fd277d29afc00038387b3"
     }
 ]
