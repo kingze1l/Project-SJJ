@@ -48,7 +48,6 @@
         "age": 234,
         "courses": [
             "Diploma in Digital Design - Web and Graphic Design",
-            "Bachelor of Software Engineering",
             "Diploma in Creative Digital Design"
         ],
         "email": "1@1.com",
@@ -63,8 +62,7 @@
         "address": "sfd",
         "age": 22,
         "courses": [
-            "Certificate in Creative Media",
-            "Diploma in Film and Content Creation"
+            "Certificate in Creative Media"
         ],
         "email": "test@123.com",
         "firstName": "dave",
@@ -105,5 +103,52 @@
         "lastName": "allysen",
         "mobile": "this is real",
         "password": "ab95576a8876e234562a4a44f2156c94"
+    },
+    {
+        "address": "whitakewr gradtorna sa",
+        "age": 100,
+        "courses": [
+            "Diploma in Digital Design - Web and Graphic Design",
+            "Bachelor of IT - Software Engineering"
+        ],
+        "email": "a@aa.comwd",
+        "firstName": "joan",
+        "fullName": "joan allysen",
+        "isDomestic": false,
+        "lastName": "allysen",
+        "mobile": "0221220884",
+        "password": "14164d0a227c8c35bc8dfecc96d89419"
+    },
+    {
+        "address": "whitaker place",
+        "age": 20,
+        "courses": [
+            "Diploma in Digital Design - Web and Graphic Design",
+            "Bachelor of IT - Software Engineering",
+            "Diploma in Language Studies"
+        ],
+        "email": "allysen@gmail.com",
+        "firstName": "joan",
+        "fullName": "joan ",
+        "isDomestic": false,
+        "lastName": "",
+        "mobile": "0222333444",
+        "password": "a6b61e2f517ed12f2409dff3f4df2444"
+    },
+    {
+        "address": "whitaker place",
+        "age": 20,
+        "courses": [
+            "Diploma in Digital Design - Web and Graphic Design",
+            "Bachelor of IT - Software Engineering",
+            "Diploma in Language Studies"
+        ],
+        "email": "q@a.com",
+        "firstName": "j",
+        "fullName": "j a",
+        "isDomestic": false,
+        "lastName": "a",
+        "mobile": "0222333444",
+        "password": ""
     }
 ]

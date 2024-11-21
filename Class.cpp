@@ -161,14 +161,8 @@ void Admin::searchStudentsByName(const unordered_map<string, Student>& students,
 
 void removeStudentJson(const string& email);
 void Admin::removeStudent(unordered_map<string, Student>& students, string studentEmail) {
-    if (students.find(studentEmail) != students.end()) {
-        students.erase(studentEmail);
-        removeStudentJson(studentEmail);
-        cout << "Student with email " << studentEmail << " has been removed." << endl;
-    }
-    else {
-        cout << "Student not found." << endl;
-    }
+    students.erase(studentEmail);
+    removeStudentJson(studentEmail);
 }
 
 void Admin::removeStudentCourse(unordered_map<string, Student>& students, string studentEmail) {
@@ -288,10 +282,18 @@ void studentSignUpJSON() {
     0xab, 0xf7, 0x97, 0x75, 0x46, 0x65, 0x1d, 0x37};
 
     vector<uint8_t> encrypted{};
+    
+    string originalPassword, confirmPassword;
+    while (true) {
+        string originalPassword = validation.inputPasswordValidation();
+        cout << "Confirm Password..." << endl;
+        string confirmPassword = validation.inputPassword();
+        if (originalPassword != confirmPassword) {
+            cout << "Password do not match, please insert again!" << endl;
+            continue;
+        } break;
+    }
 
-    string originalPassword = validation.inputPassword(); // temp to inputpassword
-    // DEBUG PURPOSES
-    // cout << "Original Password: " << originalPassword << endl;
     encryptClass.encryptPassword(
         originalPassword.c_str(),
         privateKey,
@@ -301,8 +303,6 @@ void studentSignUpJSON() {
 
     password = encryptClass.symbolToHex(encrypted);
 
-    // DEBUG PURPOSES
-    cout << "ENCRYPTED PASSWORD: " << password << endl;
 
     cout << "First Name: ";
     getline(cin, firstName);
@@ -374,6 +374,7 @@ void studentSignUpJSON() {
 
     outFile << existingdata.dump(4);
     outFile.close();
+    setColor(10);
     cout << "Student registered and saved successfully!" << endl;
 }
 
@@ -505,7 +506,7 @@ void adminMenu(string& email) {
         setColor(12); // Red for admin options
         cout << "1. View All Students\n2. View Domestic Students\n3. View International Students\n4. Remove a Student\n5. Remove a Student Course \n6. Search Student by Name\n7. Log Out\n";
         cout << "Choose an admin option: ";
-        adminChoice = v.inputNumber(6);
+        adminChoice = v.inputNumber(7);
 
         switch (adminChoice) {
         case 1:
@@ -534,6 +535,17 @@ void adminMenu(string& email) {
             cout << "Enter student email to remove: ";
             v.discardExtraInput();
             getline(cin, studentEmail);
+            while (true) {
+                if (studentEmail == "0") break;
+                if (students.find(studentEmail) == students.end()) {
+                    cout << "Email is not found, please try again! Or enter 0 to cancel" << endl;
+                    cout << "Email: ";
+                    getline(cin, studentEmail);
+                    continue;
+                }
+                break;
+            }
+
             admins[email].removeStudent(students, studentEmail);
             Sleep(1000);
             break;
@@ -549,14 +561,16 @@ void adminMenu(string& email) {
             v.discardExtraInput();
             getline(cin, searchEmail);
             while (true) {
+                if (searchEmail == "0") break;
                 if (students.find(searchEmail) == students.end()) {
-                    cout << "Email is not found, please try again!" << endl;
+                    cout << "Email is not found, please try again! or enter 0 to cancel" << endl;
                     cout << "Email: ";
                     getline(cin, searchEmail);
                     continue;
                 }
                 break;
             }
+            if (searchEmail == "0") break;
 
             admins[email].removeStudentCourse(students, searchEmail);
 
