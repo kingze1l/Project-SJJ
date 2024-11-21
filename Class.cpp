@@ -260,8 +260,6 @@ void studentSignUpJSON() {
 
     password = encryptClass.symbolToHex(encrypted);
 
-    cout << endl;
-
     cout << "First Name: ";
     getline(cin, firstName);
     cout << "Last Name: ";
@@ -273,8 +271,18 @@ void studentSignUpJSON() {
     age = validation.inputAgeValidation();
 
     validation.discardExtraInput();
-    cout << "Mobile Number: ";
-    getline(cin, mobile);
+    while (true) {
+        cout << "Mobile Number: ";
+        getline(cin, mobile);
+
+        if (Validation::isValidNZMobileNumber(mobile)) {  // Call static method directly
+            break;  // If the mobile number is valid, break the loop
+        }
+        else {
+            cout << "Invalid mobile number. Please enter a valid NZ mobile number." << endl;
+        }
+    }
+
     address = validation.inputAddress();
 
     cout << "Are you a domestic student? (1 for Yes, 0 for No): ";
