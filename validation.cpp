@@ -41,7 +41,7 @@ int Validation::inputNumber(const int& numOfOption) {
 string Validation::inputPassword() {
     string password;
     char ch;
-    cout << "Enter password: ";
+    cout << "Password: ";
     while ((ch = _getch()) != '\r') { // '\r' is Enter key in Windows
         if (ch == '\b' && !password.empty()) { // Handle backspace
             password.pop_back();
